@@ -18,7 +18,7 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import StarIcon from '@material-ui/icons/Star';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
 import Tooltip from '@material-ui/core/Tooltip';
-import TimeAgo from 'timeago-react'; 
+import TimeAgo from 'timeago-react';  
 
 
 const UserSection: React.FC<{user: any, me: boolean }> = ({ user, me}) => {
@@ -30,13 +30,12 @@ const UserSection: React.FC<{user: any, me: boolean }> = ({ user, me}) => {
     }
 
     return (
-      <div className="full-profile-icon-row">
-        <div className="field-question-profile">
-          {icon}
-          <div>{field}</div>
-        </div>
-        <div className="field-answer muted-text">{answer}</div>
-      </div>
+      <span className="full-profile-icon-row">
+        <span className="field-question-profile">
+          {icon} <span>{field}</span>: &nbsp;
+        </span>
+        <span className="field-answer muted-text">{answer}</span>
+      </span>
     )
   }
 
@@ -64,9 +63,12 @@ const UserSection: React.FC<{user: any, me: boolean }> = ({ user, me}) => {
 
   return (
     <div>
-      <div className="user-section-wrapper">
-        <div className="user-section-data">
-          <h1 style={{ fontSize: "26px" }}>{user.name}  · <span className="full-profile-location muted-text">{user.city}, {user.state}</span>
+      <Paper margin="2em 0em">
+        <div className="user-general-info">
+          <img className="user-section-image" src={ROOTURL + user.photo} />
+        </div>
+
+        <h1 style={{ fontSize: "26px", display:"inline" }}>{user.name}  · <span className="full-profile-location muted-text">{user.city}, {user.state}</span>
           </h1>
           <div
             style={{
@@ -82,16 +84,22 @@ const UserSection: React.FC<{user: any, me: boolean }> = ({ user, me}) => {
               </span>
             </p>
            </div>
+      </Paper>
+
+      <div className="user-section-wrapper">
+        <div className="user-section-data">
+          
           <Paper margin="2em 0em">
             <div className="profile-section-header">About me 😀</div>
-            <p className="muted-text">{user.age} years old!</p>
+            <ProfileIconRow field={"Age"} chips={false} answer={user.age} icon={<EmojiPeopleIcon className="full-profile-icon" />}/>
             <ProfileIconRow field={"Personality"} chips={false} answer={user.personality} icon={<EmojiPeopleIcon className="full-profile-icon" />}/>
+
+            <ProfileIconRow field={"Work Status"} chips={false} answer={user.work_status} icon={<WorkIcon className="full-profile-icon" />}/>
 
             <ProfileIconRow field={"Details"} chips={false} answer={<div className="full-profile-das">
               <p>{user.details_about_self}</p>
               </div>} icon={<NotesIcon className="full-profile-icon" />}/>
 
-            <ProfileIconRow field={"Work Status"} chips={false} answer={user.work_status} icon={<WorkIcon className="full-profile-icon" />}/>
           </Paper>
 
           <Paper margin="2em 0em">
@@ -120,7 +128,7 @@ const UserSection: React.FC<{user: any, me: boolean }> = ({ user, me}) => {
             <ProfileIconRow field={"Prefered exercise time"} chips={true} answer={user.prefered_exercise_time} icon={<ScheduleIcon className={"full-profile-icon"} />} />
           </Paper>
       </div>
-      <div className="user-metadata">
+      {/* <div className="user-metadata">
         <img className="user-section-image" src={ROOTURL + user.photo} />
         {me ?  null : (
           <div style={{ display: "flex" }}>
@@ -138,7 +146,7 @@ const UserSection: React.FC<{user: any, me: boolean }> = ({ user, me}) => {
             ))}
           </div>
         ) : null}
-      </div>
+      </div> */}
     </div>
     </div>
   )
