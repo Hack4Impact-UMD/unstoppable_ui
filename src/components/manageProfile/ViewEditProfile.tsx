@@ -23,10 +23,10 @@ const ViewEditProfile: React.FC = ({  }) => {
       <div>
         { editMode ? (
         <div>
-          <h3 className="profile-title">Edit Profile</h3>
+          <h3 className="profile-title">Edit Profile</h3> 
           <p>All changes will become part of your profile.</p>
         </div> 
-        ) : <h3>My Profile</h3>}
+        ) : "" }
         { editMode ? null : <Button onClick={() => setEditMode(true)}>Edit Profile</Button> }
       </div>
       { editMode ? <EditProfile editControls={{editMode, setEditMode}} /> : <UserSection user={currentProfile} me={true} /> }
