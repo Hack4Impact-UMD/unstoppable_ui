@@ -26,14 +26,6 @@ const ViewEditProfile: React.FC = ({  }) => {
       <div>
         { editMode ? (
         <div>
-          <h3 className="editProfile">Edit Profile</h3>
-          <div>
-            <Avatar src={ROOTURL + store.avatarPath}  size={200} />
-            <span style={{display : 'inline-block', padding: '30px'}}>
-              <h4 className="userName"> {store.username}</h4>
-              <h5 className="userAge">Age: {currentProfile.age}</h5>
-            </span>
-          </div>
           <h3 className="profile-title">Edit Profile</h3> 
           <p>All changes will become part of your profile.</p>
         </div> 
