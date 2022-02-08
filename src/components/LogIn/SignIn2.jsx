@@ -139,7 +139,7 @@ const SignIn2 = () => {
               <img src={logo} className="logo-image" alt="Logo" width="300"/>
             </div>
           
-            <h2 className="sign-in-header">Sign In2</h2>
+            <h2 className="sign-in-header">Sign In</h2>
             {/* { errorMessage && <h3 className="error"> { errorMessage } </h3> } */}
 
             <div className="signin-wrapper">
