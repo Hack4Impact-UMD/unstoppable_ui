@@ -3,7 +3,7 @@
 // BrowseProfiles
 
 $cardRadius: 10px;
-$cardWidth: 300px;
+$cardWidth: 250px;
 $cardHeight: 240px;
 
 .accordian-inside {
@@ -166,6 +166,10 @@ $cardHeight: 240px;
   // &:hover {
   //   box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
   // }
+  .single-profile-link-header{
+    display: flex;
+    justify-content: space-between;
+  }
   .single-profile-body {
     font-weight: 300;
     padding: 1em 0em 0em 0em;
@@ -174,7 +178,7 @@ $cardHeight: 240px;
     z-index: 0;
     position: relative;
     color: #69616c;
-    display: flex;
+    display: block;
     font-size: 13px;
     justify-content: space-between;
     color: rgb(34, 34, 34);
@@ -419,7 +423,7 @@ $cardHeight: 240px;
 }
 
 .profile-name-loc {
-  width: 170px !important;
+  //width: 170px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;

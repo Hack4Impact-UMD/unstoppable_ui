@@ -67,20 +67,25 @@ export const ProfileCardView = ({ profile}) => {
           <img className="single-profile-image" src={ROOTURL + profile.photo} />
         </Link>
         <div className="single-profile-body">
-          <div>
-            <Link to={"/user/" + profile.id}>
-              <div
-                style={{
-                  backgroundColor: profile.active ? "#B7FFBF" : "white",
-                }}
-              >
-                {getCancerCard({ profile })}
+          <div className="single-profile-link-header">
+              <Link to={"/user/" + profile.id}>
+                <div
+                  style={{
+                    backgroundColor: profile.active ? "#B7FFBF" : "white",
+                  }}
+                >
+                  {getCancerCard({ profile })}
 
-                <h5 className="profile-username profile-name-loc">
-                 <b> {profile.name}{" "} </b>
-                </h5>
-              </div>
-            </Link>
+                  <h5 className="profile-username profile-name-loc">
+                  <b> {profile.name}{" "} </b>
+                  </h5>
+                </div>
+              </Link>
+            
+              <div>
+              <p>last login <TimeAgo datetime={profile.last_seen_at} locale="en.US" /> </p>
+            </div>
+          </div>
 
             <div className="profile-location" style={{marginBottom: "10px"}}>
               <LocationIcon className="location-icon"></LocationIcon>
@@ -99,9 +104,7 @@ export const ProfileCardView = ({ profile}) => {
               </p>
             </Link>
           </div>
-          <div>
-            <p>last login <TimeAgo datetime={profile.last_seen_at} locale="en.US" /> </p>
-          </div>
+          
           {/* <div>
             {profile.active && (
               <Tooltip
@@ -125,7 +128,7 @@ export const ProfileCardView = ({ profile}) => {
                 />
            
           {/* </div> */}
-        </div>
+        
       </div>
     ));
 
