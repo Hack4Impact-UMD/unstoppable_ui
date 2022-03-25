@@ -49,8 +49,9 @@
   }
   .conversation-wrapper {
     border-radius: 5px;
-    height: 100%;
-    width: 70%;
+    height: 90vh;
+    width: 60vw;
+    overflow: auto;
     background-color: white;
     margin-left: 1em;
   }
@@ -78,6 +79,7 @@
       // color: white;
       display: flex;
       color: black;
+      margin-top: 5%;
       .chat-info {
         .chat-user {
           font-weight: 700;
@@ -151,22 +153,22 @@
     // background-color: #9696ff;
     background-color: #9560A8;
     color: white;
-    width: 484px;
+    width: 40%;
   }
   .from-them-message {
     // background-color: rgba(184, 186, 189, 0.4);
     // background-color: rgb(150,150,150);
     background-color: #B8BABD;
     color: #363637;
-    width: 484px;
+    width: 40%;
   }
   .from-me-image {
-    margin-right: 34px;
-    margin-left: 15px;
+    margin-right: 3%;
+    margin-left: 1.5%;
   }
   .from-them-image {
-    margin-right: 15px;
-    margin-left: 34px;
+    margin-right: 3%;
+    margin-left: 1.5%;
   }
   .from-me-date {
     padding-right: 105px;
