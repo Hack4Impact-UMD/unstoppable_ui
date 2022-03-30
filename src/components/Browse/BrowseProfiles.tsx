@@ -64,6 +64,7 @@ export const BrowseProfiles = () => {
     store.savedSearchParams.ageRange[1],
   ]);
   const [distance, setDistance] = useState(store.savedSearchParams.distance);
+  const [enableCityFilter, setEnableCityFilter] = useState(false)
 
   // const [distanceRange, setDistanceRange] = useState([
   //   store.savedSearchParams.distanceRange[0],
@@ -292,9 +293,9 @@ export const BrowseProfiles = () => {
         ? displayText + " City: " + cityKeyword
         : displayText;
     }
-    displayText = filter
-      ? displayText + "  " + " Filter: " + filter
-      : displayText;
+    // displayText = filter
+    //   ? displayText + "  " + " Filter: " + filter
+    //   : displayText;
     //displayText = distanceOrder? displayText +  "  " + " SortOrder: " + distanceOrder : displayText;
     setSearchTextDisplay(displayText);
   };
@@ -603,7 +604,9 @@ export const BrowseProfiles = () => {
               </FormGroup>
             </Tooltip>
             </div>
-            <Select
+         
+            <Select disabled={stateCodeKeyword == ""}
+              className="select"
               style={{width: '25em'}}
               onChange={(e) => setStateCodeKeyword(e.target.value)}
               value={stateCodeKeyword}
