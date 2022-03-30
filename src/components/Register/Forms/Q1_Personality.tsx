@@ -11,7 +11,7 @@ import { displayToast } from '../../Toast/Toast';
 import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../../constants/ProfileConstants";
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+// const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const PromptIfDirty = () => {
   const formik = useFormikContext();
@@ -30,7 +30,7 @@ const Q1_Personality = () => {
 
   useEffect(() => {
     if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
-      history.push("/complete-profile/5");
+      // history.push("/complete-profile/5");
     }
   }, [])
 
@@ -61,10 +61,12 @@ const Q1_Personality = () => {
           const fetchData = async () => {
             try {
               let url = PROFILEURL + "/" + store.profile.id + "/update_steps_json";
+
               //About Me
               profile.personality = values.personality;
               profile.work_status = values.work_status;
               profile.details_about_self = values.details_about_self;
+
               // Saving data on server
               const res = await axios.patch(url,
                               { profile: profile },
@@ -72,7 +74,9 @@ const Q1_Personality = () => {
                             )
               displayToast("Successfully updated profile ✅", "success", 3000, "top-right")
               store.profile = profile;
+
               localStorage.setItem("userStore", JSON.stringify(store));
+
               history.push("/complete-profile/1");
             } catch (err) {
               displayToast("Failed to update profile", "error", 3000, "top-right")
