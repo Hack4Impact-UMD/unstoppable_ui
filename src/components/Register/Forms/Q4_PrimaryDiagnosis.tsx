@@ -137,6 +137,8 @@ const Q4_PrimaryDiagnosis = () => {
                         Next
                     </Button>
 
+                    <p className="required-response">*Response Required to Proceed</p>
+
                 </div>
               </div>
             </Form>

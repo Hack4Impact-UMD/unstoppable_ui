@@ -153,6 +153,7 @@ const Q2_Work = () => {
                   Save &amp; Continue
                 </Button>
 
+                <p className="required-response">*Response Required to Proceed</p>
             </div>
           </div>
         </Form>
