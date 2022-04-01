@@ -40,7 +40,7 @@ const User = () => {
             Go Back Home
           </Button>
         </Link>
-        <UserSection me={false} user={user} />
+        <UserSection user={user} />
       </Default>
   )
 }

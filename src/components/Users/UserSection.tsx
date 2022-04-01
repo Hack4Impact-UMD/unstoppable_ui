@@ -38,13 +38,15 @@ import { Avatar } from "antd";
 import EditProfile from '../manageProfile/EditProfile';
 import { useObserver } from "mobx-react";
 
-const UserSection: React.FC<{ user: any, me: boolean }> = ({ user, me }) => {
+const UserSection: React.FC<{ user: any }> = ({ user }) => {
   const store = useDataStore();
   const [currentProfile, setCurrentProfile] = useState(store.profile);
   const [dataLoading, setDataLoading] = useState("");
   const [profileImg, setProfileImg] = useState(ROOTURL + store.avatarPath);
   const history = useHistory();
   const [editMode, setEditMode] = useState(false);
+
+  const me = user.id === store.profileId;
 
   const openPopupbox = () => {
     setEditMode(true);
@@ -147,7 +149,10 @@ const UserSection: React.FC<{ user: any, me: boolean }> = ({ user, me }) => {
             </div>  
 
             <div className="edit-button" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Button onClick={openPopupbox} style={{textTransform: "uppercase"}} > <BorderColorIcon></BorderColorIcon> &nbsp; Edit Profile</Button>
+              {me &&
+                <Button onClick={openPopupbox} style={{textTransform: "uppercase"}} > <BorderColorIcon></BorderColorIcon> &nbsp; Edit Profile</Button>
+              }
+              
               <PopupboxContainer />
             </div>
 
