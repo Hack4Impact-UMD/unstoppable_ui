@@ -216,7 +216,7 @@ const ViewFavoritesPage: React.FC = ({}) => {
         <h3 className="pageHeader">Favorites Profiles</h3>
         <p>You can find all your favorite profiles here</p>
         <div id="headerFilter">
-          <div className="favorites-search-box">
+          {/* <div className="favorites-search-box">
             <FontAwesomeIcon icon={faSearch} />
             <Tooltip title="Add any word including the cancer type, state, zipcode or city. Example: 1) 20854 Breast Ovarian 2)  VA TNBC 3)   Lung Rockville Gaithersburg 4)   MD DCIS kidney Stage 3">
               <input
@@ -238,7 +238,7 @@ const ViewFavoritesPage: React.FC = ({}) => {
               />
             }
             label="Active Users"
-          />
+          /> */}
           {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
           <Dropdown.Item >Action</Dropdown.Item>
           <Dropdown.Item >Another action</Dropdown.Item>
