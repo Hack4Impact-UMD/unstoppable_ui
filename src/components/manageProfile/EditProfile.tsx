@@ -80,14 +80,12 @@ interface IEditProfile {
   };
 }
 
-const EditProfile: React.FC<IEditProfile> = ({ editControls }) => {
+const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, user }) => {
   const store = useDataStore();
   const history = useHistory();
   const [inputSubmitted, setInputSubmitted] = useState(false);
   // const [toggle, setTogglePanel] = useState(false);
   const [selected, setSelected] = useState(null);
-
-  var currentSelection = [];
 
   const toggle = (i) => {
 
@@ -97,7 +95,9 @@ const EditProfile: React.FC<IEditProfile> = ({ editControls }) => {
     setSelected(i);
   };
 
-  let profile = store.profile;
+  let profile = user;
+
+  let values = user;
 
   let stringActivities: { id: string; name: string }[] = Object.keys(
     store.activities
@@ -154,6 +154,7 @@ const EditProfile: React.FC<IEditProfile> = ({ editControls }) => {
             : "No",
           which_wellness_program: profile.which_wellness_program,
         }}
+        enableReinitialize
         validationSchema={ValidationSchema}
         validate={(values) => {
           let errors = {};
@@ -219,8 +220,9 @@ const EditProfile: React.FC<IEditProfile> = ({ editControls }) => {
               );
 
               // Close the pop up box once the changes have been saved
-              PopupboxManager.close()
+              
               editControls.setEditMode(false);
+              PopupboxManager.close()
 
               
             } catch (err) {
@@ -244,9 +246,13 @@ const EditProfile: React.FC<IEditProfile> = ({ editControls }) => {
                   // anything else
                 }
               }
+
             }
           };
+
+
           fetchData();
+
         }}
       >
         {({
@@ -259,6 +265,8 @@ const EditProfile: React.FC<IEditProfile> = ({ editControls }) => {
           isSubmitting,
           setFieldValue,
         }) => (
+
+          
           <Form>
             <div className="XCancelButton">
 
