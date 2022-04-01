@@ -6,6 +6,7 @@ import {
   DISTANCE_WITHIN_CONSTANT,
 } from "../../constants/ProfileConstants";
 import { ALLPROFILESURL, PROFILEURL, ROOTURL } from "../../constants/matcher";
+import { Link, NavLink } from 'react-router-dom';
 import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
 import React, { useEffect, useState } from "react";
 
@@ -14,17 +15,18 @@ import Accordion from "@material-ui/core/Accordion";
 import { AccordionDetails } from "@material-ui/core";
 import { AccordionSummary } from "@material-ui/core";
 import {AdvancedSearch} from "./AdvancedSearch"
+import Age from "../../images/age 1.png"
 import AgeIcon from "@material-ui/icons/DataUsage";
 import { BiSortAlt2 } from "react-icons/bi";
 import Brightness1Icon from "@material-ui/icons/Brightness1";
 import Button from "../Styled/Button";
 // chat imports
 import ChatIcon from "@material-ui/icons/Chat";
-import { Link, NavLink } from 'react-router-dom';
 import LocationIcon from "@material-ui/icons/LocationOn";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {MenuPopupState} from "./SortByMenu";
+import { NotificationButton } from "../Notifications/NotificationButton";
 // import NotificationIcon from '../../images/NotificationIcon.png';
 import Pagination from "react-js-pagination";
 import Radio from "@material-ui/core/Radio";
@@ -40,7 +42,6 @@ import axios from "axios";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDataStore } from "../../UserContext";
 import { useObserver } from "mobx-react";
-import { NotificationButton } from "../Notifications/NotificationButton";
 
 export const ProfileCardView = ({ profile}) => {
   const store = useDataStore();
@@ -67,27 +68,32 @@ export const ProfileCardView = ({ profile}) => {
           <img className="single-profile-image" src={ROOTURL + profile.photo} />
         </Link>
         <div className="single-profile-body">
-          <div>
-            <Link to={"/user/" + profile.id}>
-              <div
-                style={{
-                  backgroundColor: profile.active ? "#B7FFBF" : "white",
-                }}
-              >
-                {getCancerCard({ profile })}
+          <div className="single-profile-link-header">
+              <Link to={"/user/" + profile.id}>
+                <div
+                  style={{
+                    backgroundColor: profile.active ? "#B7FFBF" : "white",
+                  }}
+                >
+                  {getCancerCard({ profile })}
 
-                <h5 className="profile-username profile-name-loc">
-                 <b> {profile.name}{" "} </b>
-                </h5>
-              </div>
-            </Link>
+                  <h5 className="profile-username profile-name-loc">
+                  <b> {profile.name}{" "} </b>
+                  </h5>
+                </div>
+              </Link>
+            
+              <div>
+              <p>last login <TimeAgo datetime={profile.last_seen_at} locale="en.US" /> </p>
+            </div>
+          </div>
 
             <div className="profile-location" style={{marginBottom: "10px"}}>
               <LocationIcon className="location-icon"></LocationIcon>
               <span className="profile-card-detail"> {profile.city}, {profile.state} </span>
             </div>
             <div className="other-profile-card-data">
-              <AgeIcon className="profile-icon"></AgeIcon>
+              <img src={Age}/>
               <span className="profile-card-detail"> {profile.age} years old </span>
             </div>
 
@@ -99,9 +105,7 @@ export const ProfileCardView = ({ profile}) => {
               </p>
             </Link>
           </div>
-          <div>
-            <p>last login <TimeAgo datetime={profile.last_seen_at} locale="en.US" /> </p>
-          </div>
+          
           {/* <div>
             {profile.active && (
               <Tooltip
@@ -125,7 +129,7 @@ export const ProfileCardView = ({ profile}) => {
                 />
            
           {/* </div> */}
-        </div>
+        
       </div>
     ));
 

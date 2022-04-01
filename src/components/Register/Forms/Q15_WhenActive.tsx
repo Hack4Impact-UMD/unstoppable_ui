@@ -13,7 +13,7 @@ import { displayToast } from '../../Toast/Toast';
 import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../../constants/ProfileConstants";
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+// const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const PromptIfDirty = () => {
   const formik = useFormikContext();
@@ -115,9 +115,11 @@ const Q15_WhenActive = () => {
                         <div className="Answers">
                             <Field
                                 as={Select}
+                                className="visible_dropdown"
                                 id="preferred_time"
                                 name="preferred_time"
                                 onClick={()=>setFilled(true)}
+                                size="3"
                             >
                                 <option value="" label="- Select One -" />
                                 {PREFERRED_TIME_DESCRIPTIONS.map(item => (<option key={item} value={item}>	{item}</option>))}

@@ -1,18 +1,22 @@
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Typography from '@material-ui/core/Typography';
+import { 
+  Stepper,
+  Step,
+  StepLabel,
+  Typography,
+  Paper,
+  LinearProgress,
+  makeStyles
+} from '@material-ui/core';
 import React from "react";
 import UnsIcon from '../../images/2Unstoppable_logo.png'
 import './About.scss'
 import {
   BrowserRouter as Router,
-  useParams
+  useParams,
+  Link
 } from "react-router-dom";
 import Button from '../Styled/Button';
-import Paper from '@material-ui/core/Paper';
-import {Link} from 'react-router-dom';
+
 
 // importing questions for multi-page-form: OLD
 import AboutStep from './Forms/AboutStep';
@@ -39,6 +43,7 @@ import Q13_WhereActive from './Forms/Q13_WhereActive';
 import Q14_FitnessLevel from './Forms/Q14_FitnessLevel';
 import Q15_WhenActive from './Forms/Q15_WhenActive';
 import Q16_MainReason from './Forms/Q16_MainReason';
+import Q17_UploadPhoto from './Forms/Q17_UploadPhoto';
 
 import { createBrowserHistory } from 'history'
 
@@ -60,6 +65,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  colorPrimary: {
+    background: '#B8BABD',
+  },
+  barColorPrimary: {
+    background: '#9560A8',
+  },
+  linearProgress: {
+    margin: '118px 229px 107px 200px',
+  }
 }));
 
 // progress bar/steps at the top 
@@ -102,7 +116,7 @@ function getStepContent(step) {
     case 15:
       return <Q16_MainReason/>;
     case 16:
-      return <UploadPhoto fromWizard={true} />;
+      return <Q17_UploadPhoto />;
 
     // Old steps that can be observed
     // case 8:
@@ -166,6 +180,31 @@ export default function About() {
   const handleReset = () => {
     setActiveStep(0);
   };
+
+  const totalSteps = 13;
+
+  const getStepProgress = (step) => {
+    if (step <= totalSteps) {
+      return 100 * step / totalSteps;
+    }
+    return 100;
+  }
+
+  const StepperProgress = () => {
+    return (
+      <Stepper activeStep={activeStep}>
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+    )
+  }
   
 // Entire Complete Profile Page 
   return (
@@ -178,19 +217,17 @@ export default function About() {
       {/* <ForwardUserToLogout /> */}
 
       {/* Progress at Top */}
-      {/* <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper> */}
+      <LinearProgress 
+        classes={{
+          colorPrimary: classes.colorPrimary, 
+          barColorPrimary: classes.barColorPrimary,
+        }}
+        className={classes.linearProgress}
+        variant="determinate" 
+        value={getStepProgress(activeStep)} 
+      />
       <div>
-        {activeStep === steps.length ? (
+        {activeStep === totalSteps ? (
           <div>
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished

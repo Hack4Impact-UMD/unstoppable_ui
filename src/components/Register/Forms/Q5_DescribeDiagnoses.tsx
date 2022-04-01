@@ -6,14 +6,12 @@ import axios from "axios";
 import { PROFILEURL} from "../../../constants/matcher";
 import { TREATMENT_STATUS_DESCRIPTIONS } from "../../../constants/ProfileConstants"
 import Button from '../../Styled/Button';   
-import Select from '../../Styled/Select';
-import Paper from '../../Styled/Paper';
 import './Steps.scss'
 import { displayToast } from '../../Toast/Toast';
 import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../../constants/ProfileConstants";
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+// const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const PromptIfDirty = () => {
   const formik = useFormikContext();
@@ -35,7 +33,7 @@ const Q5_DescribeDiagnoses = () => {
 
   useEffect(() => {
     if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
-      history.push("/complete-profile/5");
+      // history.push("/complete-profile/5");
     }
   }, [])
 
@@ -45,7 +43,7 @@ const Q5_DescribeDiagnoses = () => {
 
   const handleNext = (event: React.MouseEvent) => {
     event.preventDefault();
-    history.push("/complete-profile/5");
+    // history.push("/complete-profile/5");
   }
   return (
     <div>
@@ -130,6 +128,8 @@ const Q5_DescribeDiagnoses = () => {
                     <Button margin="2em 1.5em" padding="10px 20px" disabled={isSubmitting || !filled}>
                         Next
                     </Button>
+
+                    <p className="required-response">*Response Required to Proceed</p>
 
                 </div>
               </div>

@@ -20,6 +20,7 @@ import Textarea from "../Styled/Textarea";
 import TimeAgo from "timeago-react";
 import axios from "axios";
 import { useDataStore } from "../../UserContext";
+import SendIcon from "../../images/SendIcon.png";
 
 // TODO need to move up
 // Format nested params correctly
@@ -145,6 +146,13 @@ const Inbox = () => {
       //resetForm();
     }
   };
+
+  const handleClick = (event) => {
+    if (msgText !== "") {
+      event.preventDefault();
+      setMessageSent(true);
+    }
+  }
 
   useEffect(() => {
     const getProfiles = async () => {
@@ -286,8 +294,11 @@ const Inbox = () => {
               </div>
             </div>
             <div className="conversation-preview">
-              <div>{message.recent.content}</div>
-              <div className="message-icon">23</div>
+              {/* <div>{message.recent.content}</div> 
+              <div className="message-icon-orange">23</div> */}
+              
+              <div className="maxWidthMessagePreview">{String(message.recent.content).length >= 20 ? String(message.recent.content).substring(0, 20) + " ... " : String(message.recent.content)}</div>
+              <div className="message-icon-orange">23</div>
             </div>
           </div>
         )}
@@ -299,29 +310,125 @@ const Inbox = () => {
     const isMe = (from: string, me: string) => from === me;
 
     return (
-      <div
-        className={
-          "flex-row " +
-          (isMe(from, store.username) ? "from-me-row" : "from-them-row")
-        }
-      >
-        <span
+      // <div
+      //   className={
+      //     "flex-row " +
+      //     (isMe(from, store.username) ? "from-me-row" : "from-them-row")
+      //   }
+      // >
+      //   {!isMe(from, store.username) &&
+      //     <Avatar
+      //       className=".ant-avatar-sm"
+      //       src={ROOTURL + userPhoto}
+      //       size="small"
+      //     />
+      //   }
+      //   <span
+      //     className={
+      //       "single-message-wrapper " +
+      //       (isMe(from, store.username)
+      //         ? "from-me-message"
+      //         : "from-them-message")
+      //     }
+      //   >
+      //     {content}{" "}
+      //     <span id="date_display" style={{ display: "block", float: "right" }}>
+      //       {" "}
+      //       <TimeAgo datetime={updated_at} locale="en.US" />{" "}
+      //     </span>
+      //   </span>
+      //   {isMe(from, store.username) &&
+      //     <Avatar
+      //       className=".ant-avatar-sm"
+      //       src={ROOTURL + userPhoto}
+      //       size="small"
+      //     />
+      //   }
+      // </div>
+      <div>
+        <div
           className={
-            "single-message-wrapper " +
-            (isMe(from, store.username)
-              ? "from-me-message"
-              : "from-them-message")
+            "flex-row " +
+            (isMe(from, store.username) ? "from-me-row" : "from-them-row")
           }
         >
-          {content}{" "}
-          <span id="date_display" style={{ display: "block", float: "right" }}>
-            {" "}
-            <TimeAgo datetime={updated_at} locale="en.US" />{" "}
+          {!isMe(from, store.username) &&
+            <Avatar
+              className=".ant-avatar-sm from-them-image"
+              src={ROOTURL + userPhoto}
+              size="small"
+            />
+          }
+          <span
+            className={
+              "single-message-wrapper " +
+              (isMe(from, store.username)
+                ? "from-me-message"
+                : "from-them-message")
+            }
+          >
+            {content}{" "}
+            {/* <span id="date_display" style={{ display: "block", float: "right" }}>
+              {" "}
+              <TimeAgo datetime={updated_at} locale="en.US" />{" "}
+            </span> */}
           </span>
-        </span>
+          {isMe(from, store.username) &&
+            <Avatar
+              className=".ant-avatar-sm from-me-image"
+              src={ROOTURL + userPhoto}
+              size="small"
+            />
+          }
+        </div>
+        <div 
+          className={
+            "flex-row " +
+            (isMe(from, store.username) ? "from-me-row" : "from-them-row")
+          }
+        >
+          <span
+            className={
+              "single-date-wrapper " + 
+              (isMe(from, store.username)
+                ? "from-me-date"
+                : "from-them-date")
+            }
+          >
+            {"Message Seen "}
+            <Datetime datetime={updated_at} />
+          </span>
+        </div>
       </div>
     );
   };
+
+  const Datetime = ({ datetime }) => {
+    const seen: Date = new Date(datetime);
+    const now: Date = new Date();
+
+    if (seen.getDate() !== now.getDate()) {
+      return <TimeAgo datetime={datetime} locale="en.US" />
+    }
+
+    let text = "";
+
+    const hours = seen.getHours();
+
+    if (hours == 0) {
+      text = `12:${seen.getMinutes()}am`;
+    } else if (hours > 12) {
+      text = `${hours - 12}:${seen.getMinutes()}pm`;
+    } else if (hours == 12) {
+      text = `12:${seen.getMinutes()}pm`;
+    } else {
+      text = `${hours}:${seen.getMinutes()}am`;
+    }
+
+    return (
+      <>{text}</>
+    );
+  }
 
   const handleNewConversation = (event: any) => {
     event.preventDefault();
@@ -352,8 +459,8 @@ const Inbox = () => {
         )}
         {!displaySearch && (
           <div className="conv-nav-header">
-            <h3 className="nav-header">Inbox Message</h3>
-            <span className="message-icon">26</span>
+              <h3 className="nav-header">Inbox Message&nbsp;<span className="message-icon-orange">26</span></h3>
+              
             <button
               onClick={() => setDisplaySearch(true)}
               className="search-Icon"
@@ -404,14 +511,36 @@ const Inbox = () => {
         <div className="messages-wrapper">
           <InboxWrapper />
           <div className="conversation-wrapper">
-            <nav className="purple-nav conversation-nav-wrapper">
+            <nav className="white-nav conversation-nav-wrapper">
               <div className="conv-nav-text">
-                {currChat === ""
+                {/* {currChat === ""
                   ? "Select or start conversation"
                   : "Chat with " + currChat + ", Subject: " + subject}
                 {currChat && (
                   <Avatar src={ROOTURL + currConversation.photo} size="large" />
-                )}
+                )} */}
+                <span className="single-conversation-avatar nav-image">
+                  <Avatar 
+                    className="ant-avatar-sm"
+                    src={ROOTURL + currConversation.photo} 
+                    size="large" 
+                  />
+                  <span className="status bottomRight"></span>
+                </span>
+                <span
+                  className="chat-info"
+                >
+                  <div
+                    className="chat-user"
+                  >
+                    {currChat}
+                  </div>
+                  <div
+                    className="chat-status"
+                  >
+                    Active Now
+                  </div>
+                </span>
               </div>
             </nav>
             {/* {currChat === "" ? "Select or start conversation" : "Chat with " +  currChat} */}
@@ -444,30 +573,62 @@ const Inbox = () => {
                 </div>
               )}
               {newConversation && (
-                <Textarea
-                  value={msgText}
-                  onChange={(event) => setMsgText(event.target.value)}
-                  margin="1em 0em"
-                  height="40px"
-                  width="100%"
-                  padding="10px"
-                  fontSize="12px"
-                  placeholder={"Send a message to " + currChat + " 👋"}
-                  onKeyDown={handleKeyDown}
-                ></Textarea>
+                <div
+                  className="flex-row"
+                >
+                  <span
+                    className="msg-text"
+                  >
+                    <Textarea
+                      value={msgText}
+                      onChange={(event) => setMsgText(event.target.value)}
+                      margin="1em 0em"
+                      height="40px"
+                      width="100%"
+                      padding="10px"
+                      fontSize="12px"
+                      border="2px solid #9560A8"
+                      borderRadius="50px"
+                      placeholder={"Write a message "}
+                      onKeyDown={handleKeyDown}
+                    ></Textarea>
+                  </span>
+                  <span
+                    className="msg-send"
+                    onClick={handleClick}
+                  >
+                    <img src={SendIcon} />
+                  </span>
+                </div>
               )}
               {currChat && (
-                <Textarea
-                  value={msgText}
-                  onChange={(event) => setMsgText(event.target.value)}
-                  margin="1em 0em"
-                  height="40px"
-                  width="100%"
-                  padding="10px"
-                  fontSize="12px"
-                  placeholder={"Send a message to " + currChat + " 👋"}
-                  onKeyDown={handleKeyDown}
-                ></Textarea>
+                <div
+                  className="flex-row"
+                >
+                  <span
+                    className="msg-text"
+                  >
+                    <Textarea
+                      value={msgText}
+                      onChange={(event) => setMsgText(event.target.value)}
+                      margin="1em 0em"
+                      height="40px"
+                      width="100%"
+                      padding="10px"
+                      fontSize="12px"
+                      placeholder={"Write a message "}
+                      onKeyDown={handleKeyDown}
+                    ></Textarea>
+                  </span>
+                  <span
+                    className="msg-send"
+                    onClick={handleClick}
+                  >
+                    <img 
+                      src={SendIcon} 
+                    />
+                  </span>
+                </div>
               )}
             </form>
           </div>

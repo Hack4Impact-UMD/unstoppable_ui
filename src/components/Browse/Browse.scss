@@ -3,7 +3,7 @@
 // BrowseProfiles
 
 $cardRadius: 10px;
-$cardWidth: 300px;
+$cardWidth: 250px;
 $cardHeight: 240px;
 
 .accordian-inside {
@@ -166,6 +166,10 @@ $cardHeight: 240px;
   // &:hover {
   //   box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
   // }
+  .single-profile-link-header{
+    display: flex;
+    justify-content: space-between;
+  }
   .single-profile-body {
     font-weight: 300;
     padding: 1em 0em 0em 0em;
@@ -174,7 +178,7 @@ $cardHeight: 240px;
     z-index: 0;
     position: relative;
     color: #69616c;
-    display: flex;
+    display: block;
     font-size: 13px;
     justify-content: space-between;
     color: rgb(34, 34, 34);
@@ -207,31 +211,57 @@ $cardHeight: 240px;
     }
 
     .brain-cancer-type-card {
-      background-color: #525151;
+      background-color: rgba(82, 81, 81, 0.2);
+      color: rgb(82, 81, 81);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .breast-cancer-type-card {
-      background-color: #eb5757;
+      background-color: rgba(235, 87, 87, 0.2);
+      color: rgb(235, 87, 87);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .bladder-cancer-type-card {
-      background-color: #5282fc;
+      background-color: rgba(82, 130, 252, 0.2);
+      color: rgb(82, 130, 252);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .bone-cancer-type-card {
-      background-color: #fcb852;
+      background-color: rgba(252, 184, 82, 0.2);
+      color: rgb(252, 184, 82);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .other-cancer-type-card {
-      background-color: #9560a8;
+      background-color: rgba(149, 96, 168, 0.2);
+      color: rgb(149, 96, 168);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .thyroid-cancer-type-card {
-      background-color: #4cb6d8;
-    }
-
-    .cervical-cancer-type-card {
-      background-color: rgba(76, 181, 216, 0.2);
+      background-color: rgba(76, 182, 216, 0.2);
       color: rgb(76, 182, 216);;
       font-weight: bold;
       border-radius: 5px;
@@ -240,66 +270,160 @@ $cardHeight: 240px;
       display: inline-block;
     }
 
+    .cervical-cancer-type-card {
+      background-color: rgba(76, 181, 216, 0.2);
+      color: rgb(76, 181, 216);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
+    }
+
     .colorectal-cancer-type-card {
-      background-color: #5282fc;
+      background-color: rgba(82, 130, 252, 0.2);
+      color: rgb(82, 130, 252);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .esophageal-cancer-type-card {
-      background-color: #9560a8;
+      background-color: rgba(149, 96, 168, 0.2);
+      color: rgb(149, 96, 168);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .gall-bladder-cancer-type-card {
-      background-color: #9560a8;
+      background-color: rgba(149, 96, 168, 0.2);
+      color: rgb(149, 96, 168);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .gastric-cancer-type-card {
-      background-color: #9560a8;
+      background-color: rgba(149, 96, 168, 0.2);
+      color: rgb(149, 96, 168);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .head-and-neck-cancer-type-card {
-      background-color: #902929;
+      background-color: rgba(144, 41, 41, 0.2);
+      color: rgb(144, 41, 41);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .kidney-cancer-type-card {
-      background-color: #ff8947;
+      background-color: rgba(255, 137, 71, 0.2);
+      color: rgb(255, 137, 71);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .leukemia-cancer-type-card {
-      background-color: #ff8947;
+      background-color: rgba(255, 137, 71, 0.2);
+      color: rgb(255, 137, 71);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .liver-cancer-type-card {
-      background-color: #00a651;
+      background-color: rgba(0, 166, 81, 0.2);
+      color: rgb(0, 166, 81);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .lung-cancer-type-card {
-      background-color: #525151;
+      background-color: rgba(82, 81, 81, 0.2);
+      color: rgb(82, 81, 81);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .melanoma-cancer-type-card {
-      background-color: #1f1f1f;
+      background-color: rgba(31, 31, 31, 0.2);
+      color: rgb(31, 31, 31);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .multiple-myeloma-cancer-type-card {
-      background-color: #902929;
+      background-color: rgba(144, 41, 41, 0.2);
+      color: rgb(144, 41, 41);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .ovarian-cancer-type-card {
-      background-color: #4cb6db;
+      background-color: rgba(76, 182, 219, 0.2);
+      color: rgb(76, 182, 216);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .pancreatic-cancer-type-card {
-      background-color: #9560a8;
+      background-color: rgba(149, 96, 168, 0.2);
+      color: rgb(76149, 96, 168);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
 
     .ovarian-cancer-type-card {
-      background-color: #fcb852;
+      background-color: rgba(252, 184, 82, 0.2);
+      color: rgb(252, 184, 82);;
+      font-weight: bold;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
     }
   }
 }
 
 .profile-name-loc {
-  width: 170px !important;
+  //width: 170px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -324,6 +448,12 @@ $cardHeight: 240px;
     outline: none;
     border: 0;
   }
+}
+
+.select:disabled {
+  opacity: 1;
+  background: #ECECEC;
+  cursor: default;
 }
 
 .slider-styling {
@@ -421,4 +551,20 @@ $cardHeight: 240px;
 .profile-card-detail {
   color: black;
   font-size: initial;
+}
+
+// CSS for the complete profile page that shows up if user didn't complete profile 
+.complete-profile-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  resize: vertical;
+  flex-direction: column;
+  height: 90vh;
+  width: 80vw;
+}
+
+.complete-profile-message {
+  resize: vertical;
+  display: contents;
 }
