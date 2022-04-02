@@ -67,7 +67,6 @@ const SideNav = () => {
         <Avatar className="avatar-border" src={ROOTURL + store.avatarPath} size="large" />
         
         <DropdownButton id="dropdown-basic-button" title={store.username}>
-          <Dropdown.Item href="/profile">Edit Profile</Dropdown.Item>
           <Dropdown.Item href="/settings">Account Settings</Dropdown.Item>
           <Dropdown.Item href="/logout">Log Out</Dropdown.Item>
         </DropdownButton>
