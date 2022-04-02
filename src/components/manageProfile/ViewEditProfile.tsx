@@ -29,6 +29,8 @@ const ViewEditProfile: React.FC = ({}) => {
     // window.addEventListener("scroll", () => {window.scrollTo(0,0)});
     // window.removeEventListener("scroll", () => {window.scrollTo(0,0)});
 
+    
+
     const content = (
       <div>
         <div>
@@ -45,7 +47,7 @@ const ViewEditProfile: React.FC = ({}) => {
           </div>
         </div>
 
-        <EditProfile editControls={{ editMode, setEditMode }} />
+        <EditProfile editControls={{ editMode, setEditMode }} user={currentProfile}/>
       </div>
     );
     PopupboxManager.open({ content });

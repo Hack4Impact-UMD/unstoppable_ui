@@ -66,7 +66,7 @@ const UserSection: React.FC<{ user: any }> = ({ user }) => {
           </div>
         </div>
 
-        <EditProfile editControls={{ editMode, setEditMode }} />
+        <EditProfile editControls={{ editMode, setEditMode }} user={user} />
       </div>
     );
     PopupboxManager.open({ content });
