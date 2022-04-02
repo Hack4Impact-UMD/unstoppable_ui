@@ -34,7 +34,6 @@ const ViewEditProfile: React.FC = ({}) => {
         <div>
           <div className="inline-flex">
             <h3 className="editProfile">Edit Profile</h3>
-            
           </div>
 
           <div>
@@ -67,7 +66,7 @@ const ViewEditProfile: React.FC = ({}) => {
           <PopupboxContainer { ...popupboxConfig }/>
         </div>
       </div> */}
-      <UserSection user={currentProfile} me={true} />
+      <UserSection user={currentProfile} />
     </div>
   );
 };

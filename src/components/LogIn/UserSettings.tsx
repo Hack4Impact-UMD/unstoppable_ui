@@ -133,7 +133,7 @@ const UserSettings = (props: ProfileProps) => {
         <div className="Values">
           <div className="account-settings-page-header">Account Settings</div>
 
-          <Paper style={{ marginLeft: "auto" , marginRight: "auto"}}  className="paper-block">
+          <Paper style={{ marginLeft: "auto" , marginRight: "auto" }} className="paper-block">
             {/* <div className="full-width">
               <ProfileIconBlock field={"Avatar Image"} answer={
                 <div className="photo-cropper">
@@ -178,16 +178,7 @@ const UserSettings = (props: ProfileProps) => {
               <Button fontSize="18px" padding="12px 36px" background="#F1658C" color="#FFFFFF" className="settings-button">
                   Disconnect from the buddy system
               </Button>
-                <br></br>
-                <br></br>
-                <div className="account-settings">
-                All other settings can be managed in the Wix System
-                </div>
               {/* All other settings can be managed in the Wix System */}
-                <br></br>
-              <Button fontSize="18px" padding="12px 36px" background="#F1658C" color="#FFFFFF" className="settings-button">
-                  Go to Wix website
-              </Button>
             </div>
             
           </Paper>
