@@ -131,6 +131,7 @@ const Inbox = () => {
   const [newConversation, setNewConversation] = useState(false);
   const [numberOfProfiles, setNumberOfProfiles] = useState(0);
   const [userCollection, setUserCollection] = React.useState<any>([]);
+  const [scroll, setScroll] = useState(false);
 
   const history = useHistory();
 
@@ -238,7 +239,13 @@ const Inbox = () => {
           contentType: "application/json; charset=utf-8",
         },
       });
-      setConversationList(result.data.conversations);
+
+      const filteredList = result.data.conversations.filter((outer, index) => 
+        result.data.conversations.findIndex(inner => inner.participant_id === outer.participant_id) === index
+      );
+
+      // setConversationList(result.data.conversations);
+      setConversationList(filteredList);
       if (user_id) {
         setUsername(result.data.participant_name);
         setUserPhoto(result.data.participant_photo);
@@ -438,6 +445,10 @@ const Inbox = () => {
     setSubject("");
   };
 
+  const onScroll = (e) => {
+    setScroll(e.target.tagName === "DIV" && e.target.scrollTop !== 0);
+  };
+
   function InboxWrapper() {
     const [displaySearch, setDisplaySearch] = useState(false);
     const [search, setSearch] = useState("");
@@ -510,7 +521,10 @@ const Inbox = () => {
         )}
         <div className="messages-wrapper">
           <InboxWrapper />
-          <div className="conversation-wrapper">
+          <div
+            className="conversation-wrapper"
+            onScroll={onScroll}
+          >
             <nav className="white-nav conversation-nav-wrapper">
               <div className="conv-nav-text">
                 {/* {currChat === ""
@@ -556,7 +570,9 @@ const Inbox = () => {
                   {/* <hr></hr> */}
                 </>
               ))}
-            <form>
+            <form 
+              className={scroll ? "send-wrapper-sticky" : "send-wrapper"}
+            >
               {newConversation && (
                 <div className="form-group">To: {currChat}</div>
               )}
@@ -589,6 +605,7 @@ const Inbox = () => {
                       fontSize="12px"
                       border="2px solid #9560A8"
                       borderRadius="50px"
+                      overflow="hidden"
                       placeholder={"Write a message "}
                       onKeyDown={handleKeyDown}
                     ></Textarea>
@@ -616,6 +633,7 @@ const Inbox = () => {
                       width="100%"
                       padding="10px"
                       fontSize="12px"
+                      overflow="hidden"
                       placeholder={"Write a message "}
                       onKeyDown={handleKeyDown}
                     ></Textarea>
@@ -630,6 +648,15 @@ const Inbox = () => {
                   </span>
                 </div>
               )}
+              <div
+                className="flex-row word-count-row"
+              >
+                <span
+                  className={msgText.length > 0 ? "word-count" : "hide-count"}
+                >
+                  {msgText.split(" ").length}/300
+                </span>
+              </div>
             </form>
           </div>
         </div>

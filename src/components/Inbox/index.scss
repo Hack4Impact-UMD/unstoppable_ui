@@ -54,6 +54,19 @@
     overflow: auto;
     background-color: white;
     margin-left: 1em;
+    position: relative;
+
+    .send-wrapper {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .send-wrapper-sticky {
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+    }
   }
 
   .conversation-preview {
@@ -202,12 +215,18 @@
   margin-bottom: 20px;
 }
 
-.from-me-row {
+.from-me-row, .word-count-row {
   justify-content: flex-end;
 }
 
-.from-me-row {
-  justify-content: flex-end;
+.word-count {
+  color: #8B8B8B;
+  padding-right: 105px;
+  margin-bottom: 36px;
+}
+
+.hide-count {
+  display: none;
 }
 
 .search-bar {
