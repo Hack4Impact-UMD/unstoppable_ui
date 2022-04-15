@@ -132,6 +132,7 @@ const Inbox = () => {
   const [numberOfProfiles, setNumberOfProfiles] = useState(0);
   const [userCollection, setUserCollection] = React.useState<any>([]);
   const [scroll, setScroll] = useState(false);
+  const [textHeight, setTextHeight] = useState(40);
 
   const history = useHistory();
 
@@ -446,7 +447,11 @@ const Inbox = () => {
   };
 
   const onScroll = (e) => {
-    setScroll(e.target.tagName === "DIV" && e.target.scrollTop !== 0);
+    if (e.target.tagName === "DIV") {
+      setScroll(e.target.scrollTop !== 0);
+    } else {
+      setTextHeight(Math.max(40, e.target.scrollHeight));
+    }
   };
 
   function InboxWrapper() {
@@ -599,7 +604,7 @@ const Inbox = () => {
                       value={msgText}
                       onChange={(event) => setMsgText(event.target.value)}
                       margin="1em 0em"
-                      height="40px"
+                      height={textHeight + "px"}
                       width="100%"
                       padding="10px"
                       fontSize="12px"
@@ -629,7 +634,7 @@ const Inbox = () => {
                       value={msgText}
                       onChange={(event) => setMsgText(event.target.value)}
                       margin="1em 0em"
-                      height="40px"
+                      height={textHeight + "px"}
                       width="100%"
                       padding="10px"
                       fontSize="12px"
