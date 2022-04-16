@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from '../../components/Styled/Button';
 import { Link } from "react-router-dom";
 
-export const BrowseProfiles = () => {
+export const CompleteProfile = () => {
     return(
     <div className="complete-profile-container">
         <div className ="complete-profile-message">
@@ -13,4 +13,4 @@ export const BrowseProfiles = () => {
     );
 }
 
-export default BrowseProfiles;
+export default CompleteProfile;

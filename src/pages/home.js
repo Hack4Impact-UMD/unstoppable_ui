@@ -3,7 +3,7 @@ import BrowseProfiles from '../components/Browse/BrowseProfiles'
 import {useDataStore} from "../UserContext";
 import Default from '../layouts/Default';
 import {Redirect} from 'react-router-dom';
-import CompleteProfile from '../components/Browse/CompleteProfile' 
+import CompleteProfile from '../components/Browse/CompleteProfile'
 
 
 export default function Home() {
