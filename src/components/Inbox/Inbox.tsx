@@ -6,7 +6,7 @@ import {
   SENDMESSAGEURL,
 } from "../../constants/matcher";
 import { ALLPROFILESURL, PROFILEURL } from "../../constants/matcher";
-import React, { useEffect, useState } from "react";
+import React, { TextareaHTMLAttributes, useEffect, useState, useRef } from "react";
 import { faSearch, faSort } from "@fortawesome/free-solid-svg-icons";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -21,6 +21,8 @@ import TimeAgo from "timeago-react";
 import axios from "axios";
 import { useDataStore } from "../../UserContext";
 import SendIcon from "../../images/SendIcon.png";
+import { StyledComponent } from "@emotion/styled";
+import { TextAreaProps } from "antd/lib/input";
 
 // TODO need to move up
 // Format nested params correctly
@@ -132,7 +134,7 @@ const Inbox = () => {
   const [numberOfProfiles, setNumberOfProfiles] = useState(0);
   const [userCollection, setUserCollection] = React.useState<any>([]);
   const [scroll, setScroll] = useState(false);
-  const [textHeight, setTextHeight] = useState(40);
+  // const [textHeight, setTextHeight] = useState(40);
 
   const history = useHistory();
 
@@ -449,10 +451,50 @@ const Inbox = () => {
   const onScroll = (e) => {
     if (e.target.tagName === "DIV") {
       setScroll(e.target.scrollTop !== 0);
-    } else {
-      setTextHeight(Math.max(40, e.target.scrollHeight));
     }
+    // } else {
+    //   setTextHeight(Math.max(40, e.target.scrollHeight));
+    // }
   };
+
+  const AutoTextArea = () => {
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+    const [textHeight, setTextHeight] = useState("26px");
+    const [parentHeight, setParentHeight] = useState("26px");
+
+    useEffect(() => {
+      setParentHeight(`${textAreaRef.current!.scrollHeight}px`);
+      setTextHeight(`${textAreaRef.current!.scrollHeight}px`);
+    }, [msgText]);
+  
+    const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setTextHeight("26x");
+      setParentHeight(`${textAreaRef.current!.scrollHeight}px`);
+      setMsgText(event.target.value);
+    };
+
+    return (
+      <div
+        style={{
+          minHeight: parentHeight,
+        }}
+      >
+        <Textarea
+          ref={textAreaRef}
+          value={msgText}
+          onChange={onChangeHandler}
+          margin="1em 0em"
+          height={textHeight}
+          width="100%"
+          padding="10px 30px"
+          fontSize="12px"
+          overflow="hidden"
+          placeholder={"Write a message "}
+          onKeyDown={handleKeyDown}
+        ></Textarea>
+      </div>
+    );
+  }
 
   function InboxWrapper() {
     const [displaySearch, setDisplaySearch] = useState(false);
@@ -600,7 +642,7 @@ const Inbox = () => {
                   <span
                     className="msg-text"
                   >
-                    <Textarea
+                    {/* <Textarea
                       value={msgText}
                       onChange={(event) => setMsgText(event.target.value)}
                       margin="1em 0em"
@@ -613,7 +655,8 @@ const Inbox = () => {
                       overflow="hidden"
                       placeholder={"Write a message "}
                       onKeyDown={handleKeyDown}
-                    ></Textarea>
+                    ></Textarea> */}
+                    <AutoTextArea />
                   </span>
                   <span
                     className="msg-send"
@@ -630,18 +673,7 @@ const Inbox = () => {
                   <span
                     className="msg-text"
                   >
-                    <Textarea
-                      value={msgText}
-                      onChange={(event) => setMsgText(event.target.value)}
-                      margin="1em 0em"
-                      height={textHeight + "px"}
-                      width="100%"
-                      padding="10px"
-                      fontSize="12px"
-                      overflow="hidden"
-                      placeholder={"Write a message "}
-                      onKeyDown={handleKeyDown}
-                    ></Textarea>
+                    <AutoTextArea />
                   </span>
                   <span
                     className="msg-send"
