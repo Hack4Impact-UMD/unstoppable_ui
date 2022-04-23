@@ -42,6 +42,9 @@ import axios from "axios";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDataStore } from "../../UserContext";
 import { useObserver } from "mobx-react";
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 
 export const ProfileCardView = ({ profile}) => {
   const store = useDataStore();
@@ -104,6 +107,9 @@ export const ProfileCardView = ({ profile}) => {
                 Message 
               </p>
             </Link>
+
+         
+          {store.profile.liked_profiles.includes(profile.id)  ? <FavoriteIcon onClick={() => updateLikedProfiles("unlike", profile.id)} className="favorite-profile-icon" /> : <FavoriteBorderIcon onClick={() => updateLikedProfiles("like", profile.id)} className="favorite-profile-icon" />}
           </div>
           
           {/* <div>
