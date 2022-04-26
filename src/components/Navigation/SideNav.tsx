@@ -42,15 +42,15 @@ const sideNavLinks = [
   }
 ]
 
-const optionLinks = [
+const dropdownOptions = [
   {
     to: "/settings",
-    name: "Settings",
+    name: "Account Settings",
     icon: <SettingsIcon />
   },
   {
     to: "/logout",
-    name: "Logout",
+    name: "Log Out",
     icon: <ExitToAppIcon />
   }
 ]
@@ -67,8 +67,9 @@ const SideNav = () => {
         <Avatar className="avatar-border" src={ROOTURL + store.avatarPath} size="large" />
         
         <DropdownButton id="dropdown-basic-button" title={store.username}>
-          <Dropdown.Item href="/settings">Account Settings</Dropdown.Item>
-          <Dropdown.Item href="/logout">Log Out</Dropdown.Item>
+          {dropdownOptions.map((option: any) => (
+            <Dropdown.Item href={option.to}>{option.icon} {option.name}</Dropdown.Item>
+          ))}
         </DropdownButton>
 
       </div>
