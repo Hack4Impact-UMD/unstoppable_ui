@@ -496,15 +496,16 @@ const Inbox = () => {
     let text = "";
 
     const hours = seen.getHours();
+    const minutes = seen.getMinutes() < 10 ? `0${seen.getMinutes()}` : `${seen.getMinutes()}`
 
     if (hours == 0) {
-      text = `12:${seen.getMinutes()}am`;
+      text = `12:${minutes}am`;
     } else if (hours > 12) {
-      text = `${hours - 12}:${seen.getMinutes()}pm`;
+      text = `${hours - 12}:${minutes}pm`;
     } else if (hours == 12) {
-      text = `12:${seen.getMinutes()}pm`;
+      text = `12:${minutes}pm`;
     } else {
-      text = `${hours}:${seen.getMinutes()}am`;
+      text = `${hours}:${minutes}am`;
     }
 
     return (
