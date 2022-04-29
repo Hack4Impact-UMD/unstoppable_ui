@@ -23,6 +23,7 @@ import { useDataStore } from "../../UserContext";
 import SendIcon from "../../images/SendIcon.png";
 import { StyledComponent } from "@emotion/styled";
 import { TextAreaProps } from "antd/lib/input";
+import { keyframes } from "styled-components";
 
 // TODO need to move up
 // Format nested params correctly
@@ -136,6 +137,15 @@ const Inbox = () => {
   const [scroll, setScroll] = useState(false);
   // const [textHeight, setTextHeight] = useState(40);
 
+  // Store text state for messages
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [textHeight, setTextHeight] = useState("40px");
+  const [parentHeight, setParentHeight] = useState("40px");
+  const [textScroll, setTextScroll] = useState(false);
+
+  // Store data for unread messages
+  const [unread, setUnread] = useState(0);
+
   const history = useHistory();
 
   if (user_id === "") {
@@ -148,6 +158,9 @@ const Inbox = () => {
       event.preventDefault();
       setMessageSent(true);
       //resetForm();
+    }
+    if (msgText.split(' ').length === 300 && event.key === " ") {
+      event.preventDefault();
     }
   };
 
@@ -215,7 +228,12 @@ const Inbox = () => {
             });
             setCurrConversation(result.data);
             refreshData();
+            
+            // Reset message box sizing
             setMsgText("");
+            setParentHeight("40px");
+            setTextHeight("40px");
+            setTextScroll(false);
           }
         }
 
@@ -243,12 +261,47 @@ const Inbox = () => {
         },
       });
 
-      const filteredList = result.data.conversations.filter((outer, index) => 
+      let filteredList = result.data.conversations.filter((outer, index) => 
         result.data.conversations.findIndex(inner => inner.participant_id === outer.participant_id) === index
       );
 
-      // setConversationList(result.data.conversations);
+      let totalUnread = 0;
+      const idconvs = `${store.username} conversations`;
+      
+      filteredList = filteredList.map(conv => {
+        let convUnread = 0;
+
+        if (currConversation.id !== conv.id) {
+          const oldList = sessionStorage.getItem(idconvs);
+
+          if (oldList) {
+            const jsondata = JSON.parse(oldList);
+            const ele = jsondata.find(data => data.id === conv.id);
+
+            while (convUnread < conv.messages.length && 
+              conv.messages[conv.messages.length - 1 - convUnread].updated_at !== 
+              ele.messages[ele.messages.length - 1].updated_at) {
+                convUnread++;
+            }
+
+            convUnread += ele.unread;
+          }
+        } else {
+          convUnread = 0;
+        }
+        
+        totalUnread += convUnread;
+
+        return {
+          ...conv,
+          unread: convUnread,
+        };
+      });
+
+      sessionStorage.setItem(idconvs, JSON.stringify(filteredList));
+
       setConversationList(filteredList);
+      setUnread(totalUnread);
       if (user_id) {
         setUsername(result.data.participant_name);
         setUserPhoto(result.data.participant_photo);
@@ -267,6 +320,25 @@ const Inbox = () => {
   useEffect(() => {
     console.log("in useEffect settting currChat");
     console.log(currConversation);
+    
+    if (conversationList.length > 0) {
+      const newConversationList = [...conversationList];
+      const index = newConversationList.findIndex(ele => ele.id === currConversation.id);
+      let currUnread = 0;
+
+      if (index !== -1 && newConversationList[index].unread) {
+        currUnread = unread - newConversationList[index].unread;
+        newConversationList[index].unread = 0;
+      }
+
+      const idconvs = `${store.username} conversations`
+
+      sessionStorage.setItem(idconvs, JSON.stringify(newConversationList));
+
+      setConversationList([...newConversationList]);
+      setUnread(currUnread);
+    }
+
     setCurrChat(currConversation.name);
     setNewConversation(false);
     setSubject(currConversation.recent.subject);
@@ -308,7 +380,7 @@ const Inbox = () => {
               <div className="message-icon-orange">23</div> */}
               
               <div className="maxWidthMessagePreview">{String(message.recent.content).length >= 20 ? String(message.recent.content).substring(0, 20) + " ... " : String(message.recent.content)}</div>
-              <div className="message-icon-orange">23</div>
+              <div className="message-icon-orange">{message.unread}</div>
             </div>
           </div>
         )}
@@ -386,7 +458,7 @@ const Inbox = () => {
           {isMe(from, store.username) &&
             <Avatar
               className=".ant-avatar-sm from-me-image"
-              src={ROOTURL + userPhoto}
+              src={ROOTURL + store.avatarPath}
               size="small"
             />
           }
@@ -424,15 +496,16 @@ const Inbox = () => {
     let text = "";
 
     const hours = seen.getHours();
+    const minutes = seen.getMinutes() < 10 ? `0${seen.getMinutes()}` : `${seen.getMinutes()}`
 
     if (hours == 0) {
-      text = `12:${seen.getMinutes()}am`;
+      text = `12:${minutes}am`;
     } else if (hours > 12) {
-      text = `${hours - 12}:${seen.getMinutes()}pm`;
+      text = `${hours - 12}:${minutes}pm`;
     } else if (hours == 12) {
-      text = `12:${seen.getMinutes()}pm`;
+      text = `12:${minutes}pm`;
     } else {
-      text = `${hours}:${seen.getMinutes()}am`;
+      text = `${hours}:${minutes}am`;
     }
 
     return (
@@ -457,44 +530,25 @@ const Inbox = () => {
     // }
   };
 
-  const AutoTextArea = () => {
-    const textAreaRef = useRef<HTMLTextAreaElement>(null);
-    const [textHeight, setTextHeight] = useState("26px");
-    const [parentHeight, setParentHeight] = useState("26px");
+  useEffect(() => {
+    if (textAreaRef && textAreaRef.current) {
+      const maxParentHeight = Math.min(120, textAreaRef.current!.scrollHeight);
+      const maxTextHeight = Math.min(120, textAreaRef.current!.scrollHeight);
 
-    useEffect(() => {
-      setParentHeight(`${textAreaRef.current!.scrollHeight}px`);
-      setTextHeight(`${textAreaRef.current!.scrollHeight}px`);
-    }, [msgText]);
-  
-    const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setTextHeight("26x");
-      setParentHeight(`${textAreaRef.current!.scrollHeight}px`);
-      setMsgText(event.target.value);
-    };
+      setParentHeight(`${maxParentHeight}px`);
+      setTextHeight(`${maxTextHeight}px`);
+      setTextScroll(textAreaRef.current!.scrollHeight > 120); // Cap text height to 120 and begin scroll
+    }
+  }, [msgText]);
 
-    return (
-      <div
-        style={{
-          minHeight: parentHeight,
-        }}
-      >
-        <Textarea
-          ref={textAreaRef}
-          value={msgText}
-          onChange={onChangeHandler}
-          margin="1em 0em"
-          height={textHeight}
-          width="100%"
-          padding="10px 30px"
-          fontSize="12px"
-          overflow="hidden"
-          placeholder={"Write a message "}
-          onKeyDown={handleKeyDown}
-        ></Textarea>
-      </div>
-    );
-  }
+  const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setParentHeight("40px");
+    setTextHeight("40px");
+    setTextScroll(false);
+
+    // Only get first 300 words of the text (word count limit)
+    setMsgText(event.target.value.split(' ').slice(0, 300).join(' '));
+  };
 
   function InboxWrapper() {
     const [displaySearch, setDisplaySearch] = useState(false);
@@ -517,7 +571,11 @@ const Inbox = () => {
         )}
         {!displaySearch && (
           <div className="conv-nav-header">
-              <h3 className="nav-header">Inbox Message&nbsp;<span className="message-icon-orange">26</span></h3>
+              <h3 className="nav-header">Inbox Message&nbsp;
+                <span className="message-icon-orange">
+                  {unread}
+                </span>
+              </h3>
               
             <button
               onClick={() => setDisplaySearch(true)}
@@ -656,7 +714,25 @@ const Inbox = () => {
                       placeholder={"Write a message "}
                       onKeyDown={handleKeyDown}
                     ></Textarea> */}
-                    <AutoTextArea />
+                    <div
+                      style={{
+                        minHeight: parentHeight,
+                      }}
+                    >
+                      <Textarea
+                        ref={textAreaRef}
+                        value={msgText}
+                        onChange={onChangeHandler}
+                        margin="1em 0em"
+                        height={textHeight}
+                        width="100%"
+                        padding="10px 30px"
+                        fontSize="12px"
+                        overflow={textScroll ? "auto" : "hidden"}
+                        placeholder={"Write a message "}
+                        onKeyDown={handleKeyDown}
+                      ></Textarea>
+                    </div>
                   </span>
                   <span
                     className="msg-send"
@@ -673,7 +749,25 @@ const Inbox = () => {
                   <span
                     className="msg-text"
                   >
-                    <AutoTextArea />
+                    <div
+                      style={{
+                        minHeight: parentHeight,
+                      }}
+                    >
+                      <Textarea
+                        ref={textAreaRef}
+                        value={msgText}
+                        onChange={onChangeHandler}
+                        margin="1em 0em"
+                        height={textHeight}
+                        width="100%"
+                        padding="10px 30px"
+                        fontSize="12px"
+                        overflow={textScroll ? "auto" : "hidden"}
+                        placeholder={"Write a message "}
+                        onKeyDown={handleKeyDown}
+                      ></Textarea>
+                    </div>
                   </span>
                   <span
                     className="msg-send"
