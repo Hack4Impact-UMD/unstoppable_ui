@@ -13,33 +13,22 @@ import {
   WORK_STATUS_DESCRIPTIONS,
 } from "../../constants/ProfileConstants";
 import { Field, Form, Formik } from "formik";
-import { PROFILEURL, ROOTURL } from "../../constants/matcher";
-import {
-  PopupboxContainer,
-  PopupboxManager
-} from 'react-popupbox';
-import React, { useEffect, useState } from "react";
+import { PROFILEURL } from "../../constants/matcher";
+import { PopupboxManager } from 'react-popupbox';
+import React, { useState } from "react";
 
 import Button from "../Styled/Button";
-import Checkbox from '@material-ui/core/Checkbox';
-import Collapsible from "react-collapsible";
-import Default from "../../layouts/Default";
 import Error from "../LogIn/Error";
 //import Input from '../Styled/input';
 import Input from "../Styled/Input";
-import Paper from "../Styled/Paper";
-import { ProfileProps } from "../../UserStore";
 import Select from "../Styled/Select";
 import Textarea from "../Styled/Textarea";
-import UploadPhoto from "./UploadPhoto";
 import axios from "axios";
 import { displayToast } from "../Toast/Toast";
 import { useDataStore } from "../../UserContext";
 import { useHistory } from "react-router-dom";
 
 //import UploadPhoto from './UploadPhoto.js'
-
-const sleep = (ms: any) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const RadioButton = ({
   field: { name, value, onChange, onBlur },
@@ -83,21 +72,18 @@ interface IEditProfile {
 const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, user }) => {
   const store = useDataStore();
   const history = useHistory();
-  const [inputSubmitted, setInputSubmitted] = useState(false);
   // const [toggle, setTogglePanel] = useState(false);
   const [selected, setSelected] = useState(null);
 
   const toggle = (i) => {
 
-    if (selected == i) {
+    if (selected === i) {
       return setSelected(null);
     }
     setSelected(i);
   };
 
   let profile = user;
-
-  let values = user;
 
   let stringActivities: { id: string; name: string }[] = Object.keys(
     store.activities
@@ -119,12 +105,6 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
     PopupboxManager.close()
     event.preventDefault();
     editControls.setEditMode(false);
-  };
-
-  const [checked, setChecked] = React.useState(false);
-
-  const handleCheck= (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
   };
 
   const content = (
@@ -177,7 +157,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
               profile.other_favorite_activities =
                 values.other_favorite_activities;
               profile.virtual_partner =
-                values.virtual_partner == "Yes" ? true : false;
+                values.virtual_partner === "Yes" ? true : false;
               profile.fitness_level = values.fitness_level;
               profile.exercise_reason_ids =
                 values.exercise_reason_ids.map(Number);
@@ -194,7 +174,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
               profile.treatment_status = values.treatment_status;
               profile.treatment_description = values.treatment_description;
               profile.part_of_wellness_program =
-                values.part_of_wellness_string == "Yes" ? true : false;
+                values.part_of_wellness_string === "Yes" ? true : false;
               profile.which_wellness_program = values.which_wellness_program;
 
               
@@ -308,11 +288,11 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                 <div className="item">
                   <div className="title" onClick={() => toggle(0)}>
                     <h2 className="edit_profile_h2_styling">About me </h2>
-                    <span>{selected == 0 ? <BsChevronUp/> : <BsChevronDown/>}</span>
+                    <span>{selected === 0 ? <BsChevronUp/> : <BsChevronDown/>}</span>
                   </div>
                   {/* <Collapsible className="profile-section-header" trigger="About me 😀 ">
                    */}
-                  <div className={selected == 0 ? "content show" : "content"}>
+                  <div className={selected === 0 ? "content show" : "content"}>
                     {/* <div className="profile-section-header">About me 😀</div> */}
                     <div className="question-wrapper-half">
                       <label htmlFor="personality" className="question_label">
@@ -352,7 +332,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                     
                   </div>
 
-                  <div className={selected == 0 ? "contentNoFlex show" : "contentNoFlex"}>
+                  <div className={selected === 0 ? "contentNoFlex show" : "contentNoFlex"}>
 
                     <div className="question-wrapper">
                       <label htmlFor="details_about_self" className="question_label">
@@ -374,10 +354,10 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                 <div className="item">
                   <div className="title" onClick={() => toggle(1)}>
                     <h2 className="edit_profile_h2_styling">Details about Diagnosis </h2>
-                    <span>{selected == 1 ? <BsChevronUp/> : <BsChevronDown/>}</span>
+                    <span>{selected === 1 ? <BsChevronUp/> : <BsChevronDown/>}</span>
                   </div>
 
-                  <div className={selected == 1 ? "content show" : "content"}>
+                  <div className={selected === 1 ? "content show" : "content"}>
                     <div className="question-wrapper-thirty">
                       <label htmlFor="cancer_location" className="question_label">
                         What was your primary cancer diagnosis?
@@ -427,7 +407,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
 
                   </div>
 
-                  <div className={selected == 1 ? "content show" : "content"}>
+                  <div className={selected === 1 ? "content show" : "content"}>
 
                   <div className="question-wrapper-thirty">
                       <label htmlFor="other_cancer_location" className="question_label">
@@ -464,7 +444,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
 
                   </div>
 
-                  <div className={selected == 1 ? "content show" : "content"}>
+                  <div className={selected === 1 ? "content show" : "content"}>
 
                     <div className="question-wrapper">
                       <label htmlFor="part_of_wellness_program" className="question_label">
@@ -489,7 +469,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                   
                   </div>
 
-                  <div className={selected == 1 ? "content show" : "content"}>
+                  <div className={selected === 1 ? "content show" : "content"}>
                     <div className="question-wrapper">
                       <label htmlFor="which_wellness_program" className="question_label">
                         If yes, what program? (list the name and location if
@@ -509,10 +489,10 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                 <div className="item">
                   <div className="title" onClick={() => toggle(2)}>
                     <h2 className="edit_profile_h2_styling">Activity/Fitness</h2>
-                    <span>{selected == 2 ? <BsChevronUp/> : <BsChevronDown/>}</span>
+                    <span>{selected === 2 ? <BsChevronUp/> : <BsChevronDown/>}</span>
                   </div>
 
-                  <div className={selected == 2 ? "content show" : "content"}>
+                  <div className={selected === 2 ? "content show" : "content"}>
                     <div className="question-wrapper">
                       <div className="question_label">
                         Favorite activities (check all that apply)
@@ -522,7 +502,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                   </div>
 
 
-                  <div className={selected == 2 ? "content show" : "content"}>
+                  <div className={selected === 2 ? "content show" : "content"}>
                     <div className = "list-item-display">
                         <label style={{display: "inline-block"}}>
                           {stringActivities.map((item) => (
@@ -542,7 +522,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                       </div>
                   </div>
 
-                  <div className={selected == 2 ? "content show" : "content"}>
+                  <div className={selected === 2 ? "content show" : "content"}>
 
                     <div className="question-wrapper">
                       <div className="question_label">
@@ -559,7 +539,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
 
                   </div>
 
-                  <div className={selected == 2 ? "content show" : "content"}>
+                  <div className={selected === 2 ? "content show" : "content"}>
                     <div className="question-wrapper">
                         <div className="question_label">
                           Identify your top reasons for wanting to become more
@@ -598,7 +578,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
 
                   </div>
 
-                  <div className={selected == 2 ? "content show" : "content"}>
+                  <div className={selected === 2 ? "content show" : "content"}>
                     <div className = "list-item-display">
                         <label style={{display: "inline-block"}}>
                           {stringReasons.map((item) => (
@@ -619,7 +599,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
                   </div>
 
 
-                  <div className={selected == 2 ? "content show" : "content"}>
+                  <div className={selected === 2 ? "content show" : "content"}>
 
                     <div className="question-wrapper-half">
                           <div className="question_label">
@@ -693,7 +673,7 @@ const EditProfile: React.FC<{editControls: any, user: any}> = ({ editControls, u
 
                   </div>
 
-                  <div className={selected == 2 ? "content show" : "content"}>
+                  <div className={selected === 2 ? "content show" : "content"}>
 
                     
                     <div className="question-wrapper-half">

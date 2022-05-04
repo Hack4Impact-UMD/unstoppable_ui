@@ -1,6 +1,6 @@
 import "./NotificationButton.scss";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "../Styled/Button";
 import { Link, NavLink } from 'react-router-dom';
 import NotificationIcon from '../../images/NotificationIcon.png';
@@ -32,7 +32,7 @@ export const NotificationButton = () => {
     };
 
     return <div className="notification-group">
-        <NavLink className="notification-link" to="/notifications"><img src={NotificationIcon} className="notification-icon" />
+        <NavLink className="notification-link" to="/notifications"><img src={NotificationIcon} className="notification-icon" alt=""/>
         </NavLink>
         {checkCreateNotification()}
     </div>

@@ -1,5 +1,4 @@
 import React from 'react'
-import Input from '../components/Styled/Input';
 import Paper from '../components/Styled/Paper';
 import Button from '../components/Styled/Button';
 

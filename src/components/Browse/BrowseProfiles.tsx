@@ -1,52 +1,24 @@
 import "./Browse.scss";
 
-import {
-  AGE_RANGE_CONSTANT,
-  CANCERLOCATIONLIST,
-  DISTANCE_WITHIN_CONSTANT,
-} from "../../constants/ProfileConstants";
-import { ALLPROFILESURL, PROFILEURL, ROOTURL } from "../../constants/matcher";
-import { Link, NavLink } from 'react-router-dom';
-import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
+import { ALLPROFILESURL } from "../../constants/matcher";
 import React, { useEffect, useMemo, useState } from "react";
 
 // accordian imports
-import Accordion from "@material-ui/core/Accordion";
-import { AccordionDetails } from "@material-ui/core";
-import { AccordionSummary } from "@material-ui/core";
 import {AdvancedSearch} from "./AdvancedSearch"
-import AgeIcon from "@material-ui/icons/DataUsage";
-import { BiSortAlt2 } from "react-icons/bi";
-import Brightness1Icon from "@material-ui/icons/Brightness1";
 import Button from "../Styled/Button";
 // chat imports
-import ChatIcon from "@material-ui/icons/Chat";
 import Checkbox from "@material-ui/core/Checkbox";
-import DiscreteSlider from "../Common/DiscreteSlider";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
-import { IoIosArrowDown } from "react-icons/io";
-import { KeyboardArrowDown } from "@material-ui/icons";
-import LocationIcon from "@material-ui/icons/LocationOn";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import {MenuPopupState} from "./SortByMenu";
 import { NotificationButton } from "../Notifications/NotificationButton";
 // import NotificationIcon from '../../images/NotificationIcon.png';
 import Pagination from "../Favorites/Pagination";
 import {ProfileCardView} from "./ProfileCard"
-import Radio from "@material-ui/core/Radio";
-import RangeSlider from "../Common/RangeSlider";
 import { SearchParamsStore } from "../../UserStore";
 import Select from "../Styled/Select";
-import SortBarDisplay from "./SortBarDisplay";
-import SortIcon from "@material-ui/icons/Sort";
-import TimeAgo from "timeago-react";
 import Tooltip from "@material-ui/core/Tooltip";
-import { Typography } from "antd";
 import axios from "axios";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDataStore } from "../../UserContext";
@@ -64,13 +36,12 @@ export const BrowseProfiles = () => {
     store.savedSearchParams.ageRange[1],
   ]);
   const [distance, setDistance] = useState(store.savedSearchParams.distance);
-  const [enableCityFilter, setEnableCityFilter] = useState(false)
 
   // const [distanceRange, setDistanceRange] = useState([
   //   store.savedSearchParams.distanceRange[0],
   //   store.savedSearchParams.distanceRange[1],
   // ]);
-  const [keywordSearchType, setKeywordSearchType] = useState("OR");
+  const keywordSearchType = "OR";
   // Cancer type selected from dropdpwn list
   const [cancerTypeKeyword, setCancerTypeKeyword] = useState(
     store.savedSearchParams.cancerTypeKeyword
@@ -109,25 +80,13 @@ export const BrowseProfiles = () => {
   const [activeUsers, setActiveUsers] = useState(
     store.savedSearchParams.activeUsers
   );
-  // Reset all selections
-  const [reset, setReset] = useState(false);
   // Page counter for pagination
-  const [pageCounter, setPageCounter] = useState(1);
+  const [pageCounter,] = useState(1);
   // Total profiles
   const [numberOfProfiles, setNumberOfProfiles] = useState(0);
 
   // TODO
   // const [activities, setActivites] = useState(store.savedSearchParams.activeUsers);
-
-  // dummy data for notification
-  const [newNotif, setNewNotif] = useState<any>({
-      image:"/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZEk9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0d5009055e89d71c1189aa1f90bf9ad5fd2c2ddf/DSC_0034.JPG",
-      header:"Finish Setting Up Your Profile",
-      description:"Make more connections when your profile is completed. Click here to start!",
-      date: new Date("January 6, 2022"),
-      color: "#9560A8",
-      read: false,
-  })
 
   function ProfileGrid(props) {
     
@@ -180,10 +139,6 @@ export const BrowseProfiles = () => {
   }
  
 
-
-
-  const [personality, setPersonality] = useState(store.savedSearchParams.personality);
-  const [preferedExerciseLocation, setPrefered] = useState(store.savedSearchParams.prefered_exercise_location);
 
   const [scroll, setScroll] = useState(window.scrollY !== 0);
 
@@ -334,99 +289,8 @@ export const BrowseProfiles = () => {
     setNewestMemberOrder(store.savedSearchParams.newestMemberOrder);
     setActiveUsers(store.savedSearchParams.activeUsers);
     localStorage.setItem("userStore", JSON.stringify(store));
-    setReset(true);
   };
 
-  // Used by SortBarDisplay
-  const handleResetCompletion = () => {
-    setReset(false);
-  };
-
-  const updateLikedProfiles = async (type: "like" | "unlike", id: number) => {
-    try {
-      let url = PROFILEURL + "/" + store.profile.id + ".json";
-      if (type === "like") {
-        store.likeProfile(id);
-      } else if (type === "unlike") {
-        store.unlikeProfile(id);
-      }
-      const result = await axios.patch(
-        url,
-        { profile: store.profile },
-        {
-          withCredentials: true,
-          headers: { "Access-Control-Allow-Origin": "*" },
-        }
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleRadioSearch = (event) => {
-    setKeywordSearchType(event.target.value);
-  };
-
-  const handleOrderChange = (field, newOrder) => {
-    console.log("field:", field);
-    switch (field) {
-      case "distance":
-        setDistanceOrder(newOrder);
-        setAgeOrder("");
-        setLastOnlineOrder("");
-        setNewestMemberOrder("");
-        break;
-      case "age":
-        setAgeOrder(newOrder);
-        setDistanceOrder("");
-        setLastOnlineOrder("");
-        setNewestMemberOrder("");
-        break;
-      case "lastOnline":
-        setLastOnlineOrder(newOrder);
-        setDistanceOrder("");
-        setAgeOrder("");
-        setNewestMemberOrder("");
-        break;
-      case "newestMember":
-        setNewestMemberOrder(newOrder);
-        setDistanceOrder("");
-        setAgeOrder("");
-        setLastOnlineOrder("");
-        break;
-      default:
-      // code block
-    }
-  };
-
-  const checkCreateNotification = () => {
-    if (newNotif != null) {
-      return (<div className="notification-popup">
-      <p className="notification-text">{newNotif.header}</p>
-      <Button className="notification-action-btn"><Link to={"/complete-profile/0"} style={{ color: "#fff" }}>LETS GO</Link></Button>
-      <Button className="notification-close-btn" onClick={() => closeNotification()}>X</Button>
-    </div>)
-    }
-  }
-
-  const closeNotification = () => {
-    setNewNotif(null);
-  }
-
-  const handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
-    setPageCounter(pageNumber);
-  };
-
-  function ShowProfileCards() {
-    return (
-      <div className="profile-browse-grid">
-        {userCollection.map((profile: any) => (
-          <ProfileCardView profile={profile} />
-        ))}
-      </div>
-    );
-  }
   const [minDistance, setMinDistance] = useState(1);
   const [maxDistance, setMaxDistance] = useState(99);
 
@@ -442,7 +306,6 @@ export const BrowseProfiles = () => {
           <p className="browse-subheader">Enter keywords separated by spaces in search box(for e.g: TNBC DCIS Stage)</p>
         </div>
             
-        {/* <Link to={"/complete-profile/0"}> Complete your Profile!</Link> */}
         {/* <h3 className="pageHeader">Browse Profiles</h3>
         <p>
           Enter keywords separated by spaces in search box(for e.g: TNBC DCIS
@@ -605,7 +468,7 @@ export const BrowseProfiles = () => {
             </Tooltip>
             </div>
          
-            <Select disabled={stateCodeKeyword == ""}
+            <Select disabled={stateCodeKeyword === ""}
               className="select"
               style={{width: '25em'}}
               onChange={(e) => setStateCodeKeyword(e.target.value)}

@@ -33,19 +33,11 @@ const Q10_ReasonsActive = () => {
   let profile = store.profile;
 
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       history.push("/complete-profile/8");
     }
   }, [])
 
-  const handleCancel = (event: React.MouseEvent) => {
-    event.preventDefault();
-  }
-
-  const handleNext = (event: React.MouseEvent) => {
-    event.preventDefault();
-    history.push("/complete-profile/11");
-  }
   return (
     <div>
       <Formik

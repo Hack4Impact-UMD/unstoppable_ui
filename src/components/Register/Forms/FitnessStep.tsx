@@ -18,7 +18,7 @@ import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../../constants/ProfileConstants";
 
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+// const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const RadioButton = ({
   field: { name, value, onChange, onBlur },
@@ -67,7 +67,7 @@ const FitnessStep: React.FC<IFitnessStep> = ({ editControls }) => {
   let profile = store.profile;
 
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       history.push("/wizard/5");
     }
   }, [])
@@ -124,7 +124,7 @@ const FitnessStep: React.FC<IFitnessStep> = ({ editControls }) => {
               //About Me
               profile.activity_ids = values.activity_ids.map(Number);
               profile.other_favorite_activities = values.other_favorite_activities;
-              profile.virtual_partner = (values.virtual_partner == "Yes") ? true : false
+              profile.virtual_partner = (values.virtual_partner === "Yes") ? true : false
               profile.fitness_level = values.fitness_level;
               profile.exercise_reason_ids = values.exercise_reason_ids.map(Number);
               profile.prefered_exercise_location = values.prefered_exercise_location;

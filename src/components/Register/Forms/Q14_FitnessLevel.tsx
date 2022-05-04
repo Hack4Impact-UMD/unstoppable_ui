@@ -34,19 +34,11 @@ const Q14_FitnessLevel = () => {
   let profile = store.profile;
 
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       history.push("/complete-profile/13");
     }
   }, [])
 
-  const handleCancel = (event: React.MouseEvent) => {
-    event.preventDefault();
-  }
-
-  const handleNext = (event: React.MouseEvent) => {
-    event.preventDefault();
-    history.push("/complete-profile/15");
-  }
   return (
     <div>
       <Formik

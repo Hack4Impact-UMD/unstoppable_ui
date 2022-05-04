@@ -1,24 +1,19 @@
 import "react-popupbox/dist/react-popupbox.css";
 
-import { PROFILEURL, ROOTURL, UPLOADAVATARURL } from "../../constants/matcher";
-import { PopupboxContainer, PopupboxManager } from "react-popupbox";
-import { Prompt, useHistory } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { ROOTURL } from "../../constants/matcher";
+import { PopupboxManager } from "react-popupbox";
+import { Prompt } from "react-router-dom";
+import React, { useState } from "react";
 
 import { Avatar } from "antd";
-import Button from "../Styled/Button";
 import EditProfile from "./EditProfile";
 import UserSection from "../Users/UserSection";
 import { useDataStore } from "../../UserContext";
-import { useObserver } from "mobx-react";
 
 
-const ViewEditProfile: React.FC = ({}) => {
+const ViewEditProfile: React.FC = () => {
   const store = useDataStore();
-  const [currentProfile, setCurrentProfile] = useState(store.profile);
-  const [dataLoading, setDataLoading] = useState("");
-  const [profileImg, setProfileImg] = useState(ROOTURL + store.avatarPath);
-  const history = useHistory();
+  const [currentProfile,] = useState(store.profile);
   const [editMode, setEditMode] = useState(false);
 
 

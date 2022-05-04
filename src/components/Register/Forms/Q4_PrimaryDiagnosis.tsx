@@ -13,7 +13,7 @@ import { displayToast } from '../../Toast/Toast';
 import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../../constants/ProfileConstants";
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+// const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const PromptIfDirty = () => {
   const formik = useFormikContext();
@@ -34,19 +34,11 @@ const Q4_PrimaryDiagnosis = () => {
   let profile = store.profile;
 
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       // history.push("/complete-profile/5");
     }
   }, [])
-
-  const handleCancel = (event: React.MouseEvent) => {
-    event.preventDefault();
-  }
-
-  const handleNext = (event: React.MouseEvent) => {
-    event.preventDefault();
-    history.push("/complete-profile/4");
-  }
+  
   return (
     <div>
       <Formik

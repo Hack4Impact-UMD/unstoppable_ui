@@ -1,10 +1,8 @@
 import './index.scss';
 
-import { ALLPROFILESURL, PROFILEURL, ROOTURL } from "../../constants/matcher";
+import { PROFILEURL } from "../../constants/matcher";
 import React, {useEffect, useState} from 'react'
 
-import {Avatar} from 'antd';
-import {Link} from 'react-router-dom';
 import {ProfileCardView} from "../Browse/ProfileCard";
 import axios from 'axios';
 
@@ -34,7 +32,7 @@ const LikedProfile = ({ id }) => {
       }
     }
     getProfile();
-  }, [])
+  }, [user, id])
 
   if(error){
     return (null)

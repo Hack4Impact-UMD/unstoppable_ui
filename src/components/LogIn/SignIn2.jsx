@@ -2,7 +2,7 @@ import './SignIn.scss';
 
 import * as Yup from "yup";
 
-import {AGE_RANGE_CONSTANT, STEP_CONFIRMED_EMAIL, STEP_EMAIL_CONFIRMATION_SENT} from "../../constants/ProfileConstants";
+import {STEP_CONFIRMED_EMAIL} from "../../constants/ProfileConstants";
 import {Link, useHistory} from 'react-router-dom';
 import React, { useState } from "react";
 import { faEye, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -20,8 +20,6 @@ import axios from "axios";
 
 import logo from '../../images/2Unstoppable_logo.png';
 import {useDataStore} from "../../UserContext";
-import {View, TextInput} from "react";
-import { text } from '@fortawesome/fontawesome-svg-core';
 
 axios.defaults.withCredentials = true;
 // import {displayToast} from "../Toast/Toast";
@@ -39,8 +37,7 @@ const ValidationSchema = Yup.object().shape({
 const SignIn2 = () => {
   const history = useHistory();
   const url = LOGINURL;
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState();
+  const [, setIsError] = useState(false);
 
   const store = useDataStore()
 
@@ -70,7 +67,7 @@ const SignIn2 = () => {
           try {
             const result = await axios.post(url,
               { user: {"username": values.username, "password": values.password}},
-              {headers: {"Access-Control-Allow-Origin": "*", contentType: "application/json; charset=utf-8", "Accept": "application/json", "Access-Control-Allow-Origin": "*", 'Access-Control-Allow-Credentials':true} 
+              {headers: {"Access-Control-Allow-Origin": "*", contentType: "application/json; charset=utf-8", "Accept": "application/json", 'Access-Control-Allow-Credentials':true} 
             });
               console.log(JSON.stringify(result));
               console.log(result.data.username);
@@ -86,7 +83,7 @@ const SignIn2 = () => {
               store.activities = result.data.all_activities;
               store.exerciseReasons = result.data.all_exercise_reasons;
               store.confirm_token = result.data.confirm_token;
-              store.user_confirmed = (store.profile.step_status == STEP_CONFIRMED_EMAIL) ? true:false
+              store.user_confirmed = (store.profile.step_status === STEP_CONFIRMED_EMAIL) ? true:false
               store.uniqueLists.unique_state_codes = result.data.unique_state_codes;
               store.uniqueLists.unique_zipcodes = result.data.unique_zipcodes;
               store.uniqueLists.unique_cities = result.data.unique_cities;

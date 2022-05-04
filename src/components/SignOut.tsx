@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useEffect } from "react";
 import {useHistory} from 'react-router-dom';
 import axios from "axios";
 import {useDataStore} from "../UserContext";
@@ -6,7 +6,6 @@ import { LOGOUTURL, SAVESEARCHPARAMSURL } from "../constants/matcher";
 
 //export default function SignOut() {
 const SignOut: React.FC = ({  }) => {
-  const url = LOGOUTURL;
   const store = useDataStore();
   const history = useHistory();
   

@@ -1,6 +1,5 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Message from './Message';
-import Progress from './Progress';
 import axios from 'axios';
 import { ROOTURL, PROFILEURL, UPLOADAVATARURL } from "../../constants/matcher";
 import { useDataStore } from "../../UserContext";
@@ -15,29 +14,19 @@ import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../constants/ProfileConstants";
 
 const UploadPhoto = (props) => {
-  const [file, setFile] = useState('');
-  const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState(false);
   const [uploadStart, setUploadStart] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [uploadPercentage, setUploadPercentage] = useState(0);
-  const uploadedImage = React.useRef(null);
   const [showPhoto, setShowPhoto] = useState(false);
   const [newPhoto, setNewPhoto] = useState("");
   const store = useDataStore();
   const [profileImg, setProfileImg] = useState(ROOTURL + store.avatarPath);
-  const [fromWizard, setFromWizard] = useState(props.fromWizard);
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [zoom, setZoom] = useState(1)
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels)
-  }, [])
+  const [fromWizard, ] = useState(props.fromWizard);
   const history = createBrowserHistory({ forceRefresh: true });
   const [completed, setCompleted] = useState(0);
 
   useEffect(() => {
-    if (fromWizard && (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT)) {
+    if (fromWizard && (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT)) {
       // history.push("/wizard/5");
     }
   }, []);
@@ -58,13 +47,6 @@ const UploadPhoto = (props) => {
       }
       reader.readAsDataURL(e.target.files[0])
     }
-  };
-
-  const handleNext = () => {
-    history.push("/complete-profile/4");
-  };
-  const handlePrev = () => {
-    history.push("/complete-profile/2");
   };
 
   const handleCancelUpload = (e) => {
@@ -142,14 +124,13 @@ return useObserver(() => (
                     <Paper>
                       <div className="profile-section-header">Upload Photo</div>
       <Fragment>
-        {message ? <Message msg={message} /> : null}
         <p> <em> Including a photo will help other members feel more comfortable.</em></p>
         <form onSubmit={onSubmitUpload}>
           <table>
             <tr>
               <td>
                 <div className='Photo'> 
-                  <img  style={{ width: '400px', padding:"20px 0px"}} src={profileImg} />
+                  <img  style={{ width: '400px', padding:"20px 0px"}} src={profileImg} alt="" />
                 </div>
               </td>
             </tr>

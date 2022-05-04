@@ -33,14 +33,9 @@ const ChatroomListItem = ({chatroom, viewOnly}) => {
       console.log("viewOnly", viewOnly);
     }
   } , [chatroom])
-  
-  const handleClick = (event) => {
-    console.log(event.target.value);
-    history.push("/chatroomDetails/" + event.target.value);
-  }
 
   const handleInit = (event) => {
-    if(!store.chatroomsInitialize == true){
+    if(!store.chatroomsInitialize === true){
       store.chatroomsInitialize = true;
       localStorage.setItem("userStore", JSON.stringify(store));
     }

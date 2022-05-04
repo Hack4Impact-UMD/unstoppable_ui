@@ -1,28 +1,14 @@
-import React, {useState,  useEffect, useContext} from 'react'
-import { useParams, Link } from "react-router-dom";
+import React, {useState,  useEffect } from 'react'
+import { Link } from "react-router-dom";
 import { CHATROOMSURL } from "../../constants/matcher";
-import { ActionCableContext, useDataStore } from "../../UserContext";
 import axios from "axios";
 import ChatroomListItem from "./ChatroomListItem"
 import './index.scss';
-import Tooltip from '@material-ui/core/Tooltip';
 
 
 
 const ChatroomList = () => {
-  const store = useDataStore;
-  const cable = useContext(ActionCableContext);
-  const [channel, setChannel] = useState(null);
   const [chatrooms, setChatrooms] = useState([]);
-  const { chatroomId } = useParams();
-
-  const renderedChatroomListItems = chatrooms && chatrooms.map((chatroom) => (
-    <ChatroomListItem
-      key={chatroom.id}
-      chatroom={chatroom}
-      viewOnly={false}
-    />
-  ))
   
  useEffect ( () => {
   const getChatrooms = async () => {

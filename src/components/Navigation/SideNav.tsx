@@ -1,6 +1,6 @@
 import './Navigation.scss';
 
-import { ALLPROFILESURL, ROOTURL } from "../../constants/matcher";
+import { ROOTURL } from "../../constants/matcher";
 import { Link, NavLink } from 'react-router-dom';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'

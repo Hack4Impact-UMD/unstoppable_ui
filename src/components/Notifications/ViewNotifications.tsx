@@ -1,8 +1,6 @@
 import "./ViewNotifications.scss";
 
-import { PROFILEURL, ROOTURL, UPLOADAVATARURL } from "../../constants/matcher";
-import { Prompt, useHistory } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
@@ -11,8 +9,7 @@ import { useDataStore } from "../../UserContext";
 import NotificationItem from "./NotificationItem";
 import { NotificationButton } from "./NotificationButton";
 
-const ViewNotifications: React.FC = ({}) => {
-  const store = useDataStore();
+const ViewNotifications: React.FC = () => {
   const [notificationList, setNotificationList] = useState([
     {
       image:"/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBFQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--fc4ad9f3cb2ddcfdd81c5a4c825e6461e1075975/stock4.png",
@@ -80,9 +77,10 @@ const ViewNotifications: React.FC = ({}) => {
       <div className="interactables">
         <DropdownButton id="sort-by" title={sortMode}>
           {sortModes.map((mode) => {
-            if (mode != sortMode) {
+            if (mode !== sortMode) {
               return <Dropdown.Item onClick={() => dropdownOnClick(mode)}>{mode}</Dropdown.Item>
             }
+            return <></>
           })}
         </DropdownButton>
 

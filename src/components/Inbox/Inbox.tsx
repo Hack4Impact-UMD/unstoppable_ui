@@ -5,29 +5,25 @@ import {
   ROOTURL,
   SENDMESSAGEURL,
 } from "../../constants/matcher";
-import { ALLPROFILESURL, PROFILEURL } from "../../constants/matcher";
-import React, { TextareaHTMLAttributes, useEffect, useState, useRef } from "react";
-import { faSearch, faSort } from "@fortawesome/free-solid-svg-icons";
-import { useHistory, useParams } from "react-router-dom";
+import { ALLPROFILESURL } from "../../constants/matcher";
+import React, { useEffect, useState, useRef } from "react";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Avatar } from "antd";
 import Button from "../Styled/Button";
 import Default from "../../layouts/Default";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Paper from "@material-ui/core/Paper";
 import Textarea from "../Styled/Textarea";
 import TimeAgo from "timeago-react";
 import axios from "axios";
 import { useDataStore } from "../../UserContext";
 import SendIcon from "../../images/SendIcon.png";
-import { StyledComponent } from "@emotion/styled";
-import { TextAreaProps } from "antd/lib/input";
-import { keyframes } from "styled-components";
 
 // TODO need to move up
 // Format nested params correctly
 
+/*
 const exampleList = [
   {
     image:
@@ -101,6 +97,7 @@ const exampleMessages = {
     },
   ],
 };
+*/
 
 const Inbox = () => {
   //const Inbox: React.FC<UserProp> = (props) => {
@@ -128,12 +125,12 @@ const Inbox = () => {
   const [subject, setSubject] = useState("");
   const [username, setUsername] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [, setIsError] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
   const [conversationList, setConversationList] = React.useState<any>([]);
   const [newConversation, setNewConversation] = useState(false);
-  const [numberOfProfiles, setNumberOfProfiles] = useState(0);
-  const [userCollection, setUserCollection] = React.useState<any>([]);
+  const [, setNumberOfProfiles] = useState(0);
+  const [, setUserCollection] = React.useState<any>([]);
   const [scroll, setScroll] = useState(false);
   // const [textHeight, setTextHeight] = useState(40);
 
@@ -145,8 +142,6 @@ const Inbox = () => {
 
   // Store data for unread messages
   const [unread, setUnread] = useState(0);
-
-  const history = useHistory();
 
   if (user_id === "") {
     setNewConversation(false);
@@ -347,9 +342,6 @@ const Inbox = () => {
   }, [currConversation]);
 
   const Conversation = ({ message }) => {
-    {
-      /*alert(JSON.stringify(message));*/
-    }
     return (
       <div
         onClick={() => setCurrConversation(message)}
@@ -498,11 +490,11 @@ const Inbox = () => {
     const hours = seen.getHours();
     const minutes = seen.getMinutes() < 10 ? `0${seen.getMinutes()}` : `${seen.getMinutes()}`
 
-    if (hours == 0) {
+    if (hours === 0) {
       text = `12:${minutes}am`;
     } else if (hours > 12) {
       text = `${hours - 12}:${minutes}pm`;
-    } else if (hours == 12) {
+    } else if (hours === 12) {
       text = `12:${minutes}pm`;
     } else {
       text = `${hours}:${minutes}am`;
@@ -738,7 +730,7 @@ const Inbox = () => {
                     className="msg-send"
                     onClick={handleClick}
                   >
-                    <img src={SendIcon} />
+                    <img src={SendIcon} alt="" />
                   </span>
                 </div>
               )}
@@ -773,9 +765,7 @@ const Inbox = () => {
                     className="msg-send"
                     onClick={handleClick}
                   >
-                    <img 
-                      src={SendIcon} 
-                    />
+                    <img src={SendIcon} alt="" />
                   </span>
                 </div>
               )}

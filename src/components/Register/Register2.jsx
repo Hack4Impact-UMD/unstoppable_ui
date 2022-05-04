@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect} from "react";
+import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import './Register.scss'
 import { Formik } from 'formik';
@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import UnsIcon from '../../images/2Unstoppable_logo.png'
 import { useDataStore } from "../../UserContext";
-import { REGISTERURL, VALIDUSERNAMEURL, VALIDEMAILURL } from "../../constants/matcher";
+import { REGISTERURL } from "../../constants/matcher";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -19,13 +19,12 @@ var year = today.getFullYear();
 var month = today.getMonth();
 var day = today.getDate();
 const minDate = new Date(year - 18, month, day);
-const store = useDataStore();
 
 const validationSchema = Yup.object().shape({
     username: Yup.string()
         .min(1, "Too Short!")
         .max(255, "Too Long!")
-        .matches(/^[a-zA-Z0-9_\.]*$/, "Invalid Username")
+        .matches(/^[a-zA-Z0-9_.]*$/, "Invalid Username")
         // .matches(/^[a-z\d]{5,12}$/i, "Invalid Username")
         //<p><i>User name must be 5-12 characters long, with only lowercase letters followed by digits.</i></p>
         /*
@@ -92,7 +91,6 @@ const Register2 = () => {
     const url = REGISTERURL;
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [recaptchaToken, setRecaptchaToken] = useState("");
 
     const store = useDataStore();
     const recaptchaRef = React.useRef();
@@ -166,7 +164,7 @@ const Register2 = () => {
                             });
 
                           console.log(JSON.stringify(result));
-                          if (result.data.status != "error") {
+                          if (result.data.status !== "error") {
                             store.username =  result.data.username;
                             store.current_user_id = result.data.current_user_id;
                             store.email = result.data.email;
@@ -222,7 +220,7 @@ const Register2 = () => {
             }) => (
                     <div className="mainBlock">
                         <form onSubmit={handleSubmit}>
-                            <img src={UnsIcon} className="logo" />
+                            <img src={UnsIcon} className="logo" alt="" />
                             <div className="container">
                                 <h1>Sign Up</h1>
                                 <p>Please fill in this form to create an account.</p>

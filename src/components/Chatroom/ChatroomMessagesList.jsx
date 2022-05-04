@@ -1,16 +1,14 @@
 import React, {useState,  useEffect, useContext} from 'react'
 import { useParams, Link } from "react-router-dom";
 import { useObserver } from "mobx-react";
-import { ROOTURL, CHATROOMSURL } from "../../constants/matcher";
+import { CHATROOMSURL } from "../../constants/matcher";
 import { ActionCableContext, useDataStore } from "../../UserContext";
 import Textarea from '../Styled/Textarea';
 import Default from '../../layouts/Default';
 import axios from "axios";
 import { createBrowserHistory } from 'history'
-import Badge from '@material-ui/core/Badge';
 import Button from '../../components/Styled/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {Avatar} from 'antd';
 import TimeAgo from 'timeago-react';
 
 const ChatroomMessagesList = () => {
@@ -24,7 +22,6 @@ const ChatroomMessagesList = () => {
   const [chatrooms, setChatrooms] = useState([]);
   const [members, setMembers] = useState([]);
   const [chatroomName, setChatroomName] = useState("");
-  const history = createBrowserHistory({ forceRefresh: true });
   
   useEffect ( () => {
     if (messageSent === true){
@@ -66,7 +63,7 @@ const ChatroomMessagesList = () => {
         }
       };
     }
-  } , [messageSent==true])
+  } , [messageSent===true])
 
   useEffect ( () => {
     const getChatroomMessages = async () => {
@@ -96,7 +93,7 @@ const ChatroomMessagesList = () => {
       }
     }
     getChatroomMessages();
-  }, [])
+  }, [chatroomId, store])
 
 
   const handleKeyDown = (event) => {
@@ -108,19 +105,6 @@ const ChatroomMessagesList = () => {
     }
   }
 
-
-  const handleClick = (event) => {
-    console.log(event.target.value);
-    history.push("/chatroomDetails/" + event.target.value);
-  }
-
-  const DisplayMessage = (message) => {
-    return (
-      <p>
-        {message.user == store.username? " " : message.user} {message.content} {message.username} {message.created_at} 
-      </p>
-    );
-  }
   
   const DisplayTitle = () => {
     let title = "Chatroom " + chatroomName + ", Members: ";
@@ -139,11 +123,6 @@ const ChatroomMessagesList = () => {
     );
   }
 
-  const getPhoto = (username) => {
-    let member = members.find(member => member.username === username);
-    return member.photo;
-  }
-
  return  useObserver(() => (
   <div>
      <Default>
@@ -158,7 +137,7 @@ const ChatroomMessagesList = () => {
       {store.currentChatroom && store.currentChatroom.messages && store.currentChatroom.messages.map((message) => (
         <div>
           {/*<Avatar src={ROOTURL + getPhoto(message.username)}  size= "small" />*/}
-          <p>{message.user == store.username? " " : message.user} {message.content}&nbsp;&nbsp;&nbsp;&nbsp;{message.username}, <TimeAgo
+          <p>{message.user === store.username? " " : message.user} {message.content}&nbsp;&nbsp;&nbsp;&nbsp;{message.username}, <TimeAgo
                     datetime={message.created_at}
                     locale='en.US'
                   /> </p>

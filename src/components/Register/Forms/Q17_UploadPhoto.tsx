@@ -1,11 +1,11 @@
 // @ts-nocheck
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form, useFormikContext } from 'formik';
 import { useDataStore } from "../../../UserContext";
 import { Prompt } from 'react-router-dom';
 import axios from "axios";
-import { ROOTURL, PROFILEURL, UPLOADAVATARURL } from "../../../constants/matcher";
+import { PROFILEURL, UPLOADAVATARURL } from "../../../constants/matcher";
 import Button from '../../Styled/Button';
 import ProgressBar from '../../manageProfile/Progress-Bar';
 import './Steps.scss'
@@ -13,9 +13,8 @@ import { displayToast } from '../../Toast/Toast';
 import { createBrowserHistory } from 'history'
 import { STEP_EMAIL_CONFIRMATION_SENT } from "../../../constants/ProfileConstants";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { Link } from 'react-router-dom';
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+// const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const Q17_UploadPhoto = () => {
   const store = useDataStore();
@@ -28,11 +27,6 @@ const Q17_UploadPhoto = () => {
   const [showPhoto, setShowPhoto] = useState(false);
   const [newPhoto, setNewPhoto] = useState("");
   const [profileImg, setProfileImg] = useState<string>("");
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [zoom, setZoom] = useState(1)
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels)
-  }, [])
   const [completed, setCompleted] = useState(0);
 
 
@@ -140,7 +134,7 @@ const Q17_UploadPhoto = () => {
   };
 
   useEffect(() => {
-    if (newPhoto != "") {
+    if (newPhoto !== "") {
       submitPhoto();
     }
   }, [newPhoto]);
@@ -160,19 +154,10 @@ const Q17_UploadPhoto = () => {
   let profile = store.profile;
 
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       history.push("/complete-profile/16");
     }
   }, [])
-
-  const handleCancel = (event: React.MouseEvent) => {
-    event.preventDefault();
-  }
-
-  const handleNext = (event: React.MouseEvent) => {
-    event.preventDefault();
-    history.push("/complete-profile/17");
-  }
 
   return (
     <div>
@@ -253,7 +238,7 @@ const Q17_UploadPhoto = () => {
                   </>
                     :
                     <div className="file-input-style-row">
-                      <img style={{ width: '180px', padding: "10px 0px" }} src={profileImg} />
+                      <img style={{ width: '180px', padding: "10px 0px" }} src={profileImg} alt="" />
                     </div>}
                 </div>
                 <input className="file-input-fake" id="file-input" type="file" accept="image/png, image/jpeg" onChange={handleImageChange} />

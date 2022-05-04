@@ -1,33 +1,20 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useDataStore } from "../../../UserContext";
 import axios from "axios";
-import { REGISTERURL, PROFILEURL} from "../../../constants/matcher";
-import {STEP_CONFIRMED_EMAIL} from "../../../constants/ProfileConstants";
+import { REGISTERURL } from "../../../constants/matcher";
 import Button from '../../Styled/Button';
-import Input from '../../Styled/Input';
 import Paper from '../../Styled/Paper';
 import './Steps.scss'
 import { createBrowserHistory } from 'history'
-
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const VerifyEmailStep = () => {
   const store = useDataStore();
   const [resendSubmitted, setResendSubmitted] = useState(false);
   const history = createBrowserHistory({ forceRefresh: true });
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [confirmationToken, setConfirmationToken] = useState("");
-  const [confirmationTokenMatch, setConfirmationTokenMatch] = useState(false);
    
   const handleResendConfirmationLink = async e => {
     e.preventDefault();
     setResendSubmitted(true);
-  }
-
-  const handleLogin = async e => {
-    e.preventDefault();
-    history.push("/logout");
   }
 
   useEffect(() => {
@@ -55,7 +42,7 @@ const VerifyEmailStep = () => {
         }
       };
       fetchData();
-    }, [resendSubmitted]);
+    }, []);
 
    
     return ( 

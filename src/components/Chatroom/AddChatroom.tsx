@@ -1,56 +1,15 @@
 import React, {useState, useEffect} from "react";
-import { Formik, Field, Form } from 'formik';
-import {useDataStore} from "../../UserContext";
 import {useHistory} from 'react-router-dom';
 import axios from "axios";
-import { PROFILEURL, ROOTURL } from "../../constants/matcher";
-import * as Yup from 'yup';
-import Error from "../LogIn/Error";
+import { ROOTURL } from "../../constants/matcher";
 import '../manageProfile/EditProfile.scss'
-import Input from '../Styled/Input';
-import Button from '../Styled/Button';
-import Textarea from '../Styled/Textarea';
-import Select from '../Styled/Select';
-import Paper from '../Styled/Paper';
 
-import { displayToast } from '../Toast/Toast';
-
-
-
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
-
-const RadioButton = ({
-  field: { name, value, onChange, onBlur },
-  id,
-  label,
-  className,
-  ...props
-}) => {
-  return (
-    <div>
-      <input
-        name={name}
-        id={id}
-        type="radio"
-        value={id || false}
-        checked={id === value}
-        onChange={onChange}
-        onBlur={onBlur}
-        className={"radio-button"}
-        {...props}
-      />
-      <label htmlFor={id}>{label}</label>
-    </div>
-  );
-};
 
 const AddChatroom = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [url, setUrl] = useState("");
-  const [location, setLocation] = useState("");
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const errorMessage = "";
   const [inputSubmitted, setInputSubmitted] = useState(false);
   const history = useHistory();
   
@@ -88,7 +47,7 @@ const AddChatroom = () => {
     };
     fetchData();
 
-  }, [inputSubmitted]);
+  }, [inputSubmitted, name, description]);
 
 
   return (

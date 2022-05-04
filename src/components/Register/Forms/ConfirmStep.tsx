@@ -1,6 +1,5 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useDataStore } from "../../../UserContext";
-import { Prompt } from 'react-router-dom';
 import axios from "axios";
 import { REGISTERURL} from "../../../constants/matcher";
 import Button from '../../Styled/Button';
@@ -9,8 +8,6 @@ import './Steps.scss'
 import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../../constants/ProfileConstants";
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
-
 const ConfirmStep = () => {
   const store = useDataStore();
   //const history = useHistory();
@@ -18,7 +15,7 @@ const ConfirmStep = () => {
   const [inputSubmitted, setInputSubmitted] = useState(false);
  
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       history.push("/complete-profile/5");
     }
   }, []);

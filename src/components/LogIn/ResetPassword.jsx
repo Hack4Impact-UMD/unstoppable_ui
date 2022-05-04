@@ -1,18 +1,11 @@
 import React from 'react';
-import { Formik, Field, Form } from 'formik';
+import { Formik } from 'formik';
 import {useDataStore} from "../../UserContext";
-import Default from '../../layouts/Default'
 import * as Yup from 'yup';
 import axios from "axios";
-import Error from "./Error";
 import './SignIn.scss'
 import { RESETPASSWORDURL } from "../../constants/matcher";
 import ReCAPTCHA from "react-google-recaptcha";
-import {useParams} from "react-router-dom";
-
-const store = useDataStore();
-
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
  
 const recaptchaRef = React.createRef();
 
@@ -29,9 +22,6 @@ const ValidationSchema = Yup.object().shape({
 
 
 const ForgotPassword = () => {
-
-  const currentUserStore = useDataStore()
-
   
   return (
     <Formik

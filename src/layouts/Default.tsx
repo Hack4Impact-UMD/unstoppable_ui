@@ -1,5 +1,4 @@
 import React from 'react'
-import Navigation from '../components/Navigation/Navigation';
 import './index.scss'
 import SideNav from '../components/Navigation/SideNav';
 import TopNav from '../components/Navigation/TopNav';

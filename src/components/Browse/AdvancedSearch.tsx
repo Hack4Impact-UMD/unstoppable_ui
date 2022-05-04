@@ -1,51 +1,16 @@
 import "./Browse.scss";
 
-import {
-  AGE_RANGE_CONSTANT,
-  CANCERLOCATIONLIST,
-  DISTANCE_WITHIN_CONSTANT,
-} from "../../constants/ProfileConstants";
-import { ALLPROFILESURL, PROFILEURL, ROOTURL } from "../../constants/matcher";
-import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
-import React, { useEffect, useState } from "react";
+import { CANCERLOCATIONLIST } from "../../constants/ProfileConstants";
+import React, { useState } from "react";
 
 // accordian imports
 import Accordion from "@material-ui/core/Accordion";
 import { AccordionDetails } from "@material-ui/core";
 import { AccordionSummary } from "@material-ui/core";
-import AgeIcon from "@material-ui/icons/DataUsage";
-import { BiSortAlt2 } from "react-icons/bi";
-import Brightness1Icon from "@material-ui/icons/Brightness1";
-import Button from "../Styled/Button";
-// chat imports
-import ChatIcon from "@material-ui/icons/Chat";
-import Checkbox from "@material-ui/core/Checkbox";
-import DiscreteSlider from "../Common/DiscreteSlider";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import { IoIosArrowDown } from "react-icons/io";
 import { KeyboardArrowDown } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-import LocationIcon from "@material-ui/icons/LocationOn";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Pagination from "react-js-pagination";
-import Radio from "@material-ui/core/Radio";
-import RangeSlider from "../Common/RangeSlider";
-import { SearchParamsStore } from "../../UserStore";
 import Select from "../Styled/Select";
-import SortBarDisplay from "./SortBarDisplay";
-import SortIcon from "@material-ui/icons/Sort";
-import TimeAgo from "timeago-react";
-import Tooltip from "@material-ui/core/Tooltip";
 import { Typography } from "antd";
-import axios from "axios";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDataStore } from "../../UserContext";
-import { useObserver } from "mobx-react"; 
  
  
 export const AdvancedSearch = () => {

@@ -8,7 +8,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 import React from "react";
-import UnsIcon from '../../images/2Unstoppable_logo.png'
 import './About.scss'
 import {
   BrowserRouter as Router,
@@ -16,15 +15,6 @@ import {
   Link
 } from "react-router-dom";
 import Button from '../Styled/Button';
-
-
-// importing questions for multi-page-form: OLD
-import AboutStep from './Forms/AboutStep';
-import CancerStep from './Forms/CancerStep';
-import FitnessStep from './Forms/FitnessStep';
-import UploadPhoto from '../manageProfile/UploadPhoto'
-import ConfirmStep from './Forms/ConfirmStep';
-import VerifyEmailStep from './Forms/VerifyEmailStep';
 
 // importing questions for multi-page-form: UPDATED
 import Q1_Personality from './Forms/Q1_Personality';
@@ -138,12 +128,6 @@ function getStepContent(step) {
 export default function About() {
   const history = createBrowserHistory({ forceRefresh: true });
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }
   let { stepId } = useParams();
   
   const handleLogout = async e => {
@@ -151,35 +135,10 @@ export default function About() {
     history.push("/logout");
   }
 
-  const ForwardUserToLogout = () => {
-    return ( 
-        <div>
-            <form onSubmit={handleLogout}>
-                <Button
-                    type='submit'
-                    value='login'
-              >Logout</Button>
-            </form>
-            <br/>
-        </div>
-      
-    )
-  }
-
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(parseInt(stepId));
+  const [activeStep,] = React.useState(parseInt(stepId));
   //const [activeStep, setActiveStep] = React.useState(parseInt(step));
   const steps = getSteps();
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    scrollToTop();
-  };
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   const totalSteps = 13;
 
@@ -188,22 +147,6 @@ export default function About() {
       return 100 * step / totalSteps;
     }
     return 100;
-  }
-
-  const StepperProgress = () => {
-    return (
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-    )
   }
   
 // Entire Complete Profile Page 

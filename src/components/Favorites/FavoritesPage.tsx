@@ -1,116 +1,14 @@
 import "./FavoritesPage.scss";
 
-import { ALLPROFILESURL, PROFILEURL, ROOTURL, UPLOADAVATARURL } from "../../constants/matcher";
-import { Dropdown, DropdownButton } from "react-bootstrap";
-import Menu, { MenuProps } from '@material-ui/core/Menu';
-import { Prompt, useHistory } from "react-router-dom";
+import { ALLPROFILESURL } from "../../constants/matcher";
 import React, { useEffect, useMemo, useState } from "react";
-import { faSearch, faSort } from "@fortawesome/free-solid-svg-icons";
 
-// import Button from '@material-ui/core/Button';
 import Button from "../Styled/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import DraftsIcon from '@material-ui/icons/Drafts';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import LikedProfile from "../Users/LikedProfile";
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
 import {MenuPopupState} from "../Browse/SortByMenu";
 import Pagination from './Pagination';
-import SendIcon from '@material-ui/icons/Send';
-import Tooltip from "@material-ui/core/Tooltip";
 import axios from "axios";
 import { useDataStore } from "../../UserContext";
-import { withStyles } from '@material-ui/core/styles';
-
-const StyledMenu = withStyles({
-  paper: {
-    border: '1px solid #d3d4d5',
-  },
-})((props: MenuProps) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
-    }}
-    {...props}
-  />
-));
-
-const StyledMenuItem = withStyles((theme) => ({
-  // root: {
-  //   '&:focus': {
-  //     backgroundColor: theme.palette.primary.main,
-  //     '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-  //       color: theme.palette.common.white,
-  //     },
-  //   },
-  // },
-}))(MenuItem);
-
-function CustomizedMenus() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div>
-      <div className="SortButton">
-      <FontAwesomeIcon icon={faSort} />
-      {/* <Button
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-      >
-        Open Menu
-      </Button> */}
-      </div>
-      <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <StyledMenuItem>
-          <ListItemIcon>
-            <SendIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Sent mail" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <DraftsIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <InboxIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </StyledMenuItem>
-      </StyledMenu>
-    </div>
-  );
-}
 
 function ProfileGrid(props) {
   const [currentPage, setCurrentPage] = useState(1)
@@ -133,7 +31,7 @@ function ProfileGrid(props) {
   ))}
    </div>
     <div className="page-footer">
-      <Button className="button" disabled={currentPage == totalPageCount} onClick={() => { 
+      <Button className="button" disabled={currentPage === totalPageCount} onClick={() => { 
       
         if(currentPage - 1 < totalPageCount) {
           setCurrentPage(currentPage + 1)
@@ -160,26 +58,9 @@ function ProfileGrid(props) {
 
 }
 
-const ViewFavoritesPage: React.FC = ({}) => {
+const ViewFavoritesPage: React.FC = () => {
   const store = useDataStore();
   const [userCollection, setUserCollection] = React.useState<any>([]);
-  const [currentProfile, setCurrentProfile] = useState(store.profile);
-  const [dataLoading, setDataLoading] = useState("");
-  const [profileImg, setProfileImg] = useState(ROOTURL + store.avatarPath);
-  const history = useHistory();
-  const [editMode, setEditMode] = useState(false);
-  const [filter, setFilter] = React.useState(
-    store.savedSearchParams ? store.savedSearchParams.filter : ""
-  );
-  const [activeUsers, setActiveUsers] = useState(
-    store.savedSearchParams.activeUsers
-  );
-
-  const handleActiveUsers = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('looking for active users')
-    setActiveUsers(event.target.checked);
-    console.log(event.target.checked);
-  };
 
   useEffect(() => {
     // gets all the profiles to populate the browse profile cards
@@ -208,7 +89,7 @@ const ViewFavoritesPage: React.FC = ({}) => {
     };
     getProfiles();
 
-  }, []);
+  }, [userCollection]);
 
   return (
     <div>

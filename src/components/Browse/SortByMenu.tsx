@@ -1,7 +1,7 @@
 import "./Browse.scss";
 
 import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Theme, makeStyles } from '@material-ui/core/styles';
 
 import { BiSortAlt2 } from "react-icons/bi";

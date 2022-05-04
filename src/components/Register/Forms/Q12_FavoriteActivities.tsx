@@ -4,7 +4,6 @@ import { useDataStore } from "../../../UserContext";
 import { Prompt } from 'react-router-dom';
 import axios from "axios";
 import { PROFILEURL} from "../../../constants/matcher";
-import { PERSONALITY_DESCRIPTION, WORK_STATUS_DESCRIPTIONS} from "../../../constants/ProfileConstants"
 import Button from '../../Styled/Button';
 import Textarea from '../../Styled/Textarea';
 import './Steps.scss'
@@ -12,7 +11,7 @@ import { displayToast } from '../../Toast/Toast';
 import { createBrowserHistory } from 'history'
 import {STEP_EMAIL_CONFIRMATION_SENT} from "../../../constants/ProfileConstants";
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+// const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 const PromptIfDirty = () => {
   const formik = useFormikContext();
@@ -34,19 +33,11 @@ const Q12_FavoriteActivities = () => {
   let profile = store.profile;
 
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       history.push("/complete-profile/11");
     }
   }, [])
 
-  const handleCancel = (event: React.MouseEvent) => {
-    event.preventDefault();
-  }
-
-  const handleNext = (event: React.MouseEvent) => {
-    event.preventDefault();
-    history.push("/complete-profile/13");
-  }
   return (
     <div>
       <Formik

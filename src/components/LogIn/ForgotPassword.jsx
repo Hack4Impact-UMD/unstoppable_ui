@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Formik, Field, Form } from 'formik';
+import { Formik } from 'formik';
 import {useDataStore} from "../../UserContext";
-import Default from '../../layouts/Default'
 import * as Yup from 'yup';
 import axios from "axios";
 import Error from "./Error";
@@ -12,10 +11,6 @@ import Paper from '../Styled/Paper';
 import Input from '../Styled/Input';
 import Button from '../Styled/Button';
 import { createBrowserHistory } from 'history'
-
-const store = useDataStore();
-
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
  
 const recaptchaRef = React.createRef();
 
@@ -30,7 +25,6 @@ const ValidationSchema = Yup.object().shape({
 const ForgotPassword = () => {
   const [sentEmail, setSentEmail] = useState(false);
   const history = createBrowserHistory({ forceRefresh: true });
-  const currentUserStore = useDataStore()
 
   useEffect(() => {
     if (sentEmail) {

@@ -4,9 +4,7 @@ import { useDataStore } from "../../../UserContext";
 import { Prompt } from 'react-router-dom';
 import axios from "axios";
 import { PROFILEURL} from "../../../constants/matcher";
-import { PERSONALITY_DESCRIPTION, WORK_STATUS_DESCRIPTIONS} from "../../../constants/ProfileConstants"
-import Button from '../../Styled/Button';   
-import Select from '../../Styled/Select';
+import Button from '../../Styled/Button';
 import Textarea from '../../Styled/Textarea';
 import './Steps.scss'
 import { displayToast } from '../../Toast/Toast';
@@ -35,19 +33,11 @@ const Q16_MainReason = () => {
   let profile = store.profile;
 
   useEffect(() => {
-    if (store.profile.step_status == STEP_EMAIL_CONFIRMATION_SENT) {
+    if (store.profile.step_status === STEP_EMAIL_CONFIRMATION_SENT) {
       history.push("/complete-profile/15");
     }
   }, [])
 
-  const handleCancel = (event: React.MouseEvent) => {
-    event.preventDefault();
-  }
-
-  const handleNext = (event: React.MouseEvent) => {
-    event.preventDefault();
-    history.push("/complete-profile/16");
-  }
   return (
     <div>
       <Formik

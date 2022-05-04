@@ -1,24 +1,19 @@
 import './index.scss';
 
-import { ALLPROFILESURL, PROFILEURL, ROOTURL } from "../../constants/matcher";
-import React, { useEffect, useState } from 'react'
+import { ROOTURL } from "../../constants/matcher";
+import React, { useState } from 'react'
 import { PopupboxContainer, PopupboxManager } from "react-popupbox";
 
 
-import Brightness1Icon from '@material-ui/icons/Brightness1';
 import Button from '../Styled/Button';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import ExploreIcon from '@material-ui/icons/Explore';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
-import LikedProfile from '../Users/LikedProfile'
-import { Link } from 'react-router-dom';
 import NotesIcon from '@material-ui/icons/Notes';
 import Paper from '../Styled/Paper';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import SportsTennisIcon from '@material-ui/icons/SportsTennis';
-import StarIcon from '@material-ui/icons/Star';
 import TimeAgo from 'timeago-react';
-import Tooltip from '@material-ui/core/Tooltip';
 import WorkIcon from '@material-ui/icons/Work';
 import LocationIcon from "@material-ui/icons/LocationOn";
 import AgeIcon from "@material-ui/icons/DataUsageTwoTone";
@@ -26,24 +21,16 @@ import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BorderColorIcon from '@material-ui/icons/BorderColorTwoTone';
 // import LoginIcon from '@mui/icon/LoginIcon';
-import axios from 'axios';
-import colors from '../../assets/colors'
 import { useDataStore } from "../../UserContext";
 
 import "react-popupbox/dist/react-popupbox.css";
 
-import { Prompt, useHistory } from "react-router-dom";
-
 import { Avatar } from "antd";
 import EditProfile from '../manageProfile/EditProfile';
-import { useObserver } from "mobx-react";
 
 const UserSection: React.FC<{ user: any }> = ({ user }) => {
   const store = useDataStore();
-  const [currentProfile, setCurrentProfile] = useState(store.profile);
-  const [dataLoading, setDataLoading] = useState("");
-  const [profileImg, setProfileImg] = useState(ROOTURL + store.avatarPath);
-  const history = useHistory();
+  const [currentProfile,] = useState(store.profile);
   const [editMode, setEditMode] = useState(false);
 
   const me = user.id === store.profileId;
@@ -87,25 +74,6 @@ const UserSection: React.FC<{ user: any }> = ({ user }) => {
     )
   }
 
-  // ProfileIconBlock takes up only half of a Paper row (so 2 blocks fit on one row)
-  const ProfileIconBlock = ({ icon, field, answer }) => {
-    if (!answer || answer === "") {
-      return null
-    }
-
-    return (
-      <div className="profile-block">
-        <div className="full-profile-icon-row">
-          <div className="field-question-profile">
-            {icon}
-            <div>{field}</div>
-          </div>
-          <div className="field-answer muted-text">{answer}</div>
-        </div>
-      </div>
-    )
-  }
-
   const ChipList = () => {
     const Chip = ({ activityId }) => {
       const getMatch = () => {
@@ -137,7 +105,7 @@ const UserSection: React.FC<{ user: any }> = ({ user }) => {
           <Paper margin="2em 0em" className='top-card'>
 
             <div className="photo-cropper">
-              <img className="user-section-image" src={ROOTURL + user.photo} />
+              <img className="user-section-image" src={ROOTURL + user.photo} alt="" />
             </div>
 
             <div className="primary-info" style={{ width:"60%" }}>

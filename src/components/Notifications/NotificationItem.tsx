@@ -1,14 +1,12 @@
 import "./NotificationItem.scss";
 
-import { ALLPROFILESURL, PROFILEURL, ROOTURL } from "../../constants/matcher";
-import React, { useEffect, useState } from "react";
+import { ROOTURL } from "../../constants/matcher";
+import React from "react";
 
-import { useDataStore } from "../../UserContext";
 import { useObserver } from "mobx-react";
 import { Avatar } from "antd";
 
 const NotificationItem = ({ notification }) => {
-  const store = useDataStore();
   var options = { year: 'numeric', month: 'short', day: 'numeric' };
 
   const NotificationItem = ({ notification }) => useObserver(() => (

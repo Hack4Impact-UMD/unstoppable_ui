@@ -1,6 +1,4 @@
-import React from 'react';
 import forgot_password from '../../assets/submit';
-import colors from '../../assets/colors';
 import styled from 'styled-components';
 
 interface ButtonProps {
