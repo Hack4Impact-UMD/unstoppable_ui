@@ -7,7 +7,8 @@ import CompleteProfile from '../components/Browse/CompleteProfile'
 const storedData = localStorage.getItem("userStore");
 
 const messages = () => {
-  if (JSON.parse(storedData!).completed_profile == true) {
+  // if (JSON.parse(storedData!).completed_profile == true) {
+  if (true) {
     return (
       <Inbox></Inbox>
     )

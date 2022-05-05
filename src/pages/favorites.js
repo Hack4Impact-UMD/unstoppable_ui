@@ -6,7 +6,8 @@ import CompleteProfile from '../components/Browse/CompleteProfile'
 export default function Profile() {
   const storedData = localStorage.getItem("userStore");
   
-  if (JSON.parse(storedData).completed_profile == true) {
+  // if (JSON.parse(storedData).completed_profile == true) {
+  if (true) {
     return (
       <Default>
         <ViewFavoritesPage/>

@@ -14,7 +14,8 @@ export default function Home() {
     return <Redirect to="/login" />
   }
   
-  if (JSON.parse(storedData).completed_profile == true) {
+  // if (JSON.parse(storedData).completed_profile == true) {
+  if (true) {
   return (
     <Default>
       <BrowseProfiles/>
