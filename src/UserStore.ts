@@ -235,7 +235,7 @@ export class UserStore {
       this.savedSearchParams = new SearchParamsStore();
       this.uniqueLists = new UniqueListStore();
       this.chatroomsInitialized = [];
-      this.completed_profile = false;
+      this.completed_profile = true;
       }
      //hydrate('userStore', this).then(() => console.log('userStore has been hydrated'))
      Promise.all([
