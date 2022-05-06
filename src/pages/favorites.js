@@ -5,7 +5,7 @@ import CompleteProfile from '../components/Browse/CompleteProfile'
 
 export default function Profile() {
   
-  if (true) {
+  if (JSON.parse(storedData).completed_profile == true) {
     return (
       <Default>
         <ViewFavoritesPage/>
